@@ -23,6 +23,7 @@ public class WegOne {
         mensagemEscolha.put("pt", "Digite sua escolha: ");
         mensagemEscolha.put("en", "Enter your choice: ");
         mensagemEscolha.put("de", "Geben Sie Ihre Wahl ein: ");
+        //console.log teste
         
         
 
