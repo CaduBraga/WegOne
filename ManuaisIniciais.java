@@ -106,6 +106,7 @@ public class ManuaisIniciais {
             "4. **Manutenção Preventiva**: Limpeza periódica de roletes e correias.\n" +
             "5. **Parada Emergencial**: Verifique se todos os dispositivos de parada estão funcionando corretamente."
         );
+        
         return manuais;
     }
 }
