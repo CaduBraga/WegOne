@@ -1,13 +1,13 @@
 import java.util.Date;
 import java.util.Scanner;
 
-public class ManualDeDiagnostico {
+public class ManualDeCondutaOperacional {
     private String titulo;
     private Date dataPublicacao;
     private String autor;
     private String texto;
 
-    public ManualDeDiagnostico(String titulo, Date dataPublicacao, String autor, String texto) {
+    public ManualDeCondutaOperacional(String titulo, Date dataPublicacao, String autor, String texto) {
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
         this.autor = autor;
@@ -47,7 +47,7 @@ public class ManualDeDiagnostico {
     }
 
     public void exibirManual() {
-        System.out.println("=== MANUAL DE TESTES E DIAGNÓSTICO ===");
+        System.out.println("=== MANUAL DE CONDUTA E OPERAÇÕES SETORIAIS ===");
         System.out.println("Título: " + titulo);
         System.out.println("Data de Publicação: " + dataPublicacao);
         System.out.println("Autor: " + autor);
