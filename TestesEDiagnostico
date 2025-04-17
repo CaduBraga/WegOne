@@ -54,7 +54,57 @@ public class TestesEDiagnostico {
             "4. **Teste de Temperatura**: Monitore a temperatura do motor e do fluido bombeado.\n" +
             "5. **Verificação de Válvulas**: Inspecione o funcionamento correto das válvulas de entrada e saída."
         );
-        
+
+	manuais[5] = new ManualDeDiagnostico(
+                "Diagnóstico de Problemas em Redes Industriais", new Date(), "Mariana Alves",
+                "Procedimentos para diagnosticar problemas em redes industriais:\n\n" +
+                "1. **Teste de Conectividade**: Utilize ferramentas de ping e traceroute para verificar a comunicação entre dispositivos.\n" +
+                "2. **Análise de Tráfego**: Monitore o tráfego da rede com um analisador de protocolos (sniffer).\n" +
+                "3. **Verificação de Configurações IP**: Certifique-se de que os endereços IP e as máscaras de sub-rede estão corretos.\n" +
+                "4. **Inspeção de Cabos e Conectores**: Verifique se há danos físicos nos cabos e se os conectores estão bem encaixados.\n" +
+                "5. **Análise de Logs de Dispositivos**: Consulte os logs de switches, roteadores e outros dispositivos de rede para identificar erros."
+            );
+
+            manuais[6] = new ManualDeDiagnostico(
+                "Testes em Sistemas de Lubrificação", new Date(), "Pedro Santos",
+                "Procedimentos para testar sistemas de lubrificação:\n\n" +
+                "1. **Verificação do Nível de Lubrificante**: Monitore o nível de óleo ou graxa nos reservatórios.\n" +
+                "2. **Inspeção de Vazamentos**: Verifique se há vazamentos nas conexões, mangueiras e selos.\n" +
+                "3. **Análise da Qualidade do Lubrificante**: Colete amostras para verificar a viscosidade e a contaminação.\n" +
+                "4. **Teste de Pressão do Sistema**: Monitore a pressão do lubrificante durante a operação.\n" +
+                "5. **Verificação de Bomba e Filtros**: Inspecione o funcionamento da bomba de lubrificação e a condição dos filtros."
+            );
+
+            manuais[7] = new ManualDeDiagnostico(
+                "Diagnóstico de Falhas em Sistemas Hidráulicos", new Date(), "Laura Gomes",
+                "Métodos para diagnosticar falhas em sistemas hidráulicos:\n\n" +
+                "1. **Inspeção de Vazamentos**: Verifique todas as conexões, mangueiras, cilindros e válvulas em busca de vazamentos de fluido.\n" +
+                "2. **Teste de Pressão**: Utilize manômetros para verificar a pressão em diferentes pontos do sistema.\n" +
+                "3. **Verificação de Nível de Fluido**: Mantenha o nível de fluido hidráulico dentro das especificações.\n" +
+                "4. **Análise de Ruídos Anormais**: Escute por ruídos incomuns que possam indicar cavitação ou outros problemas.\n" +
+                "5. **Teste de Atuadores**: Verifique o funcionamento correto de cilindros e motores hidráulicos."
+            );
+
+            manuais[8] = new ManualDeDiagnostico(
+                "Testes em Sistemas de Ventilação e Exaustão", new Date(), "Rafael Nunes",
+                "Procedimentos para testar sistemas de ventilação e exaustão:\n\n" +
+                "1. **Medição de Vazão de Ar**: Utilize anemômetros para verificar a vazão do ar nos dutos e aberturas.\n" +
+                "2. **Inspeção de Filtros**: Verifique a condição dos filtros e realize a limpeza ou substituição conforme necessário.\n" +
+                "3. **Teste de Funcionamento de Ventiladores e Exaustores**: Verifique se os equipamentos ligam e operam corretamente.\n" +
+                "4. **Verificação de Dutos e Conexões**: Inspecione os dutos em busca de obstruções ou danos e verifique a integridade das conexões.\n" +
+                "5. **Teste de Vedação**: Verifique a vedação de portas e janelas para garantir a eficiência do sistema."
+            );
+
+            manuais[9] = new ManualDeDiagnostico(
+                "Diagnóstico de Problemas em Instrumentação Industrial", new Date(), "Sofia Castro",
+                "Métodos para diagnosticar problemas em instrumentos industriais:\n\n" +
+                "1. **Calibração de Sensores e Transmissores**: Verifique e ajuste a calibração dos instrumentos conforme as especificações.\n" +
+                "2. **Teste de Sinal de Saída**: Meça o sinal de saída dos instrumentos para verificar sua precisão.\n" +
+                "3. **Verificação de Conexões Elétricas**: Inspecione as conexões elétricas dos instrumentos em busca de mau contato ou falhas.\n" +
+                "4. **Análise de Leituras Inconsistentes**: Investigue leituras inesperadas ou inconsistentes dos instrumentos.\n" +
+                "5. **Substituição e Teste de Componentes**: Se necessário, substitua componentes defeituosos e teste o funcionamento do instrumento."
+            );
+
         return manuais;
     }
 }
