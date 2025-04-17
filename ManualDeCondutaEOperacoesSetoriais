@@ -1,0 +1,39 @@
+import java.util.Date;
+
+public class ManualDeCondutaEOperacoesSetoriais {
+    public static ManualDeCondutaOperacional[] imprimir() {
+    	ManualDeCondutaOperacional[] manuais = new ManualDeCondutaOperacional[10];
+
+        manuais[0] = new ManualDeCondutaOperacional(
+            "Conduta no Setor de Montagem", new Date(), "Ana Paula",
+            "Orientações sobre a conduta no setor de montagem:\n\n" +
+            "1. **Uso de Equipamentos de Proteção Individual (EPIs)**: Todos os colaboradores devem utilizar EPIs adequados, como capacetes, luvas e óculos de proteção.\n" +
+            "2. **Organização do Espaço de Trabalho**: Mantenha a área de montagem limpa e organizada para evitar acidentes.\n" +
+            "3. **Comunicação Clara**: Utilize sinais visuais e verbais para garantir que todos os membros da equipe estejam cientes das atividades em andamento.\n" +
+            "4. **Verificação de Ferramentas**: Antes de iniciar o trabalho, verifique se todas as ferramentas estão em boas condições e disponíveis.\n" +
+            "5. **Treinamento Contínuo**: Participe de treinamentos regulares para se manter atualizado sobre as melhores práticas e procedimentos."
+        );
+
+        manuais[1] = new ManualDeCondutaOperacional(
+            "Procedimentos Operacionais no Setor de Manutenção", new Date(), "Ricardo Alves",
+            "Orientações para procedimentos operacionais no setor de manutenção:\n\n" +
+            "1. **Planejamento de Manutenção**: Realize um planejamento detalhado das atividades de manutenção, incluindo cronogramas e recursos necessários.\n" +
+            "2. **Registro de Atividades**: Documente todas as atividades de manutenção realizadas, incluindo problemas encontrados e soluções aplicadas.\n" +
+            "3. **Segurança em Primeiro Lugar**: Sempre desligue os equipamentos antes de realizar qualquer manutenção e utilize EPIs adequados.\n" +
+            "4. **Inspeções Regulares**: Realize inspeções periódicas nos equipamentos para identificar possíveis falhas antes que se tornem críticas.\n" +
+            "5. **Colaboração em Equipe**: Trabalhe em conjunto com outros membros da equipe para garantir que as manutenções sejam realizadas de forma eficiente."
+        );
+
+        manuais[2] = new ManualDeCondutaOperacional(
+            "Processos no Setor de Controle de Qualidade", new Date(), "Fernanda Lima",
+            "Orientações sobre os processos no setor de controle de qualidade:\n\n" +
+            "1. **Verificação de Materiais**: Realize a inspeção de todos os materiais recebidos para garantir que atendam aos padrões de qualidade.\n" +
+            "2. **Testes de Produto**: Execute testes de qualidade em produtos acabados, seguindo os procedimentos estabelecidos.\n" +
+            "3. **Documentação de Resultados**: Registre todos os resultados dos testes e inspeções em relatórios de qualidade.\n" +
+            "4. **Feedback para Produção**: Forneça feedback à equipe de produção sobre quaisquer não conformidades encontradas durante as inspeções.\n" +
+            "5. **Treinamento em Qualidade**: Participe de treinamentos sobre normas de qualidade e melhores práticas para garantir a conformidade."
+        );
+
+        return manuais;
+    }
+}
