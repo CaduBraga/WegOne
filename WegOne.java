@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class WegOne {
     public static void main(String[] args) {
         // Mapa de mensagens traduzidas
-    	
+
         Map<String, String> mensagens = new HashMap<>();
         mensagens.put("pt", "Bem-vindo ao WegOne");
         mensagens.put("en", "Welcome to WegOne");
@@ -14,18 +14,19 @@ public class WegOne {
 
         // Mapa de opções do menu traduzidas
         Map<String, String[]> opcoesMenu = new HashMap<>();
-        opcoesMenu.put("pt", new String[]{"Cadastrar Orientação", "Pesquisar Orientação", "Editar Orientação", "Excluir Orientação", "Sair"});
-        opcoesMenu.put("en", new String[]{"Register Guidance", "Search Guidance", "Edit Guidance", "Delete Guidance", "Exit"});
-        opcoesMenu.put("de", new String[]{"Orientierung Registrieren", "Orientierung Suchen", "Orientierung Bearbeiten", "Orientierung Löschen", "Verlassen"});
+        opcoesMenu.put("pt", new String[] { "Cadastrar Orientação", "Pesquisar Orientação", "Editar Orientação",
+                "Excluir Orientação", "Sair" });
+        opcoesMenu.put("en",
+                new String[] { "Register Guidance", "Search Guidance", "Edit Guidance", "Delete Guidance", "Exit" });
+        opcoesMenu.put("de", new String[] { "Orientierung Registrieren", "Orientierung Suchen",
+                "Orientierung Bearbeiten", "Orientierung Löschen", "Verlassen" });
 
         // Mapa de mensagens para escolha
         Map<String, String> mensagemEscolha = new HashMap<>();
         mensagemEscolha.put("pt", "Digite sua escolha: ");
         mensagemEscolha.put("en", "Enter your choice: ");
         mensagemEscolha.put("de", "Geben Sie Ihre Wahl ein: ");
-        //console.log teste
-        
-        
+        // console.log teste
 
         // Scanner para entrada do usuário
         Scanner scanner = new Scanner(System.in);
@@ -66,7 +67,7 @@ public class WegOne {
         // Exibir mensagem para o usuário digitar a escolha
         System.out.print(mensagemEscolha.get(codigoIdioma));
         int opcao = scanner.nextInt();
-        
+
         // Lógica para processar a escolha do usuário
         // Aqui você pode adicionar a lógica para cada opção do menu
 
