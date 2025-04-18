@@ -42,8 +42,10 @@ public class Principal {
                 switch (tipoManual) {
                     case 1:
                         if (totalManuaisManutencao == manuaisManutencao.length) {
-                            /* sempre que acabar o espaço do array ele vai criar um novo, duplicar o espaço
-                            e copiar os arquivos nele novamente*/
+                            /*
+                             * sempre que acabar o espaço do array ele vai criar um novo, duplicar o espaço
+                             * e copiar os arquivos nele novamente
+                             */
                             ManualDeManutencao[] novoArray = new ManualDeManutencao[manuaisManutencao.length * 2];
                             System.arraycopy(manuaisManutencao, 0, novoArray, 0, manuaisManutencao.length);
                             manuaisManutencao = novoArray;
@@ -80,7 +82,8 @@ public class Principal {
                         break;
                     case 4:
                         if (totalManuaisConduta == manuaisConduta.length) {
-                            ManualDeCondutaOperacional[] novoArray = new ManualDeCondutaOperacional[manuaisConduta.length * 2];
+                            ManualDeCondutaOperacional[] novoArray = new ManualDeCondutaOperacional[manuaisConduta.length
+                                    * 2];
                             System.arraycopy(manuaisConduta, 0, novoArray, 0, manuaisConduta.length);
                             manuaisConduta = novoArray;
                         }
@@ -151,6 +154,49 @@ public class Principal {
                         break;
                     default:
                         System.out.println("Opção inválida.");
+                        continue; // Volta para o início do loop (contrário do break)
+                }
+
+                System.out.println("Selecione um manual para ver mais detalhes:");
+                int escolhaManual = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (tipoVisualizacao) {
+                    case 1:
+                        if (escolhaManual <= totalManuaisManutencao) {
+                            manuaisManutencao[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                        } else {
+                            System.out.println("Opção inválida.");
+                        }
+                        break;
+                    case 2:
+                        if (escolhaManual <= totalManuaisOperacao) {
+                            manuaisOperacao[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                        } else {
+                            System.out.println("Opção inválida.");
+                        }
+                        break;
+                    case 3:
+                        if (escolhaManual <= totalManuaisSeguranca) {
+                            manuaisSeguranca[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                        } else {
+                            System.out.println("Opção inválida.");
+                        }
+                        break;
+                    case 4:
+                        if (escolhaManual <= totalManuaisConduta) {
+                            manuaisConduta[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                        } else {
+                            System.out.println("Opção inválida.");
+                        }
+                        break;
+                    case 5:
+                        if (escolhaManual <= totalManuaisDiagnostico) {
+                            manuaisDiagnostico[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                        } else {
+                            System.out.println("Opção inválida.");
+                        }
+                        break;
                 }
 
             } else if (escolha == 3) {
