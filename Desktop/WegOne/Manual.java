@@ -29,7 +29,6 @@ public abstract class Manual {
         return texto;
     }
 
-    // Método de instância para exibir informações do manual
     public void exibirManual() {
         System.out.println("Título: " + this.titulo);
         System.out.println("Autor: " + this.autor);
