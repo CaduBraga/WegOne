@@ -1,13 +1,14 @@
+package backend.src.main.java.com.wegone;
 import java.util.Date;
 import java.util.Scanner;
 
-public class ManualDeDiagnostico {
+public class ManualDeSeguranca {
     private String titulo;
     private Date dataPublicacao;
     private String autor;
     private String texto;
 
-    public ManualDeDiagnostico(String titulo, Date dataPublicacao, String autor, String texto) {
+    public ManualDeSeguranca(String titulo, Date dataPublicacao, String autor, String texto) {
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
         this.autor = autor;
@@ -47,7 +48,7 @@ public class ManualDeDiagnostico {
     }
 
     public void exibirManual() {
-        System.out.println("=== MANUAL DE TESTES E DIAGNÓSTICO ===");
+        System.out.println("=== MANUAL DE SEGURANÇA ===");
         System.out.println("Título: " + titulo);
         System.out.println("Data de Publicação: " + dataPublicacao);
         System.out.println("Autor: " + autor);
@@ -57,13 +58,13 @@ public class ManualDeDiagnostico {
     public void preencherDados() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Digite o título do manual:");
+        System.out.println("Digite o título do manual de segurança:");
         this.titulo = scanner.nextLine();
 
         System.out.println("Digite o autor do manual:");
         this.autor = scanner.nextLine();
 
-        System.out.println("Digite o texto do manual:");
+        System.out.println("Digite o texto do manual de segurança:");
         this.texto = scanner.nextLine();
 
         this.dataPublicacao = new Date();
