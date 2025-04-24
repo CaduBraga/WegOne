@@ -1,3 +1,4 @@
+package backend.src.main.java.com.wegone;
 //Aqui juntamos todas as classes que vão inicializar manuais numa só
 
 import java.util.Date;

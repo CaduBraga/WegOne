@@ -1,3 +1,4 @@
+package backend.src.main.java.com.wegone;
 import java.util.Date;
 
 public abstract class Manual {

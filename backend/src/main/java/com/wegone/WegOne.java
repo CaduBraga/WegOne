@@ -1,3 +1,4 @@
+package backend.src.main.java.com.wegone;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -5,75 +6,6 @@ import java.util.Date;
 
 public class WegOne {
     public static void main(String[] args) {
-        // Mapa de mensagens traduzidas
-
-        Map<String, String> mensagens = new HashMap<>();
-        mensagens.put("pt", "Bem-vindo ao WegOne");
-        mensagens.put("en", "Welcome to WegOne");
-        mensagens.put("de", "Willkommen bei WegOne");
-
-        // Mapa de opções do menu traduzidas
-        Map<String, String[]> opcoesMenu = new HashMap<>();
-        opcoesMenu.put("pt", new String[] { "Cadastrar Orientação", "Pesquisar Orientação", "Editar Orientação",
-                "Excluir Orientação", "Sair" });
-        opcoesMenu.put("en",
-                new String[] { "Register Guidance", "Search Guidance", "Edit Guidance", "Delete Guidance", "Exit" });
-        opcoesMenu.put("de", new String[] { "Orientierung Registrieren", "Orientierung Suchen",
-                "Orientierung Bearbeiten", "Orientierung Löschen", "Verlassen" });
-
-        // Mapa de mensagens para escolha
-        Map<String, String> mensagemEscolha = new HashMap<>();
-        mensagemEscolha.put("pt", "Digite sua escolha: ");
-        mensagemEscolha.put("en", "Enter your choice: ");
-        mensagemEscolha.put("de", "Geben Sie Ihre Wahl ein: ");
-        // console.log teste
-
-        // Scanner para entrada do usuário
-        Scanner scanner = new Scanner(System.in);
-
-        // Exibir opções de idiomas
-        System.out.println("Escolha um idioma para tradução:");
-        System.out.println("1. Português");
-        System.out.println("2. Inglês");
-        System.out.println("3. Alemão");
-        System.out.print("Digite o número do idioma: ");
-        int opcao = scanner.nextInt();
-        scanner.nextLine(); // Consumir a nova linha
-
-        String codigoIdioma = "";
-        switch (opcao) {
-            case 1:
-                codigoIdioma = "pt";
-                break;
-            case 2:
-                codigoIdioma = "en";
-                break;
-            case 3:
-                codigoIdioma = "de";
-                break;
-            default:
-                System.out.println("Idioma inválido.");
-                return;
-        }
-
-        // Exibir mensagem de boas-vindas no idioma escolhido
-        System.out.println(mensagens.get(codigoIdioma));
-
-        // Exibir menu de opções no idioma escolhido
-        for (int i = 0; i < opcoesMenu.get(codigoIdioma).length; i++) {
-            System.out.println((i + 1) + ". " + opcoesMenu.get(codigoIdioma)[i]);
-        }
-
-        // Exibir mensagem para o usuário digitar a escolha
-        System.out.print(mensagemEscolha.get(codigoIdioma));
-        int codigo = scanner.nextInt();
-
-        // Lógica para processar a escolha do usuário
-
-        /*
-         * Cadu: inseri aqui o código da antiga classe Principal, com algumas pequenas
-         * alterações para rodar sem conflitos
-         */
 
         ManualDeManutencao[] manuaisManutencao = Manuais.imprimirManualDeManutencao();
         ManualDeOperacao[] manuaisOperacao = Manuais.imprimirManualDeOperacao();
@@ -87,18 +19,42 @@ public class WegOne {
         int totalManuaisConduta = manuaisConduta.length;
         int totalManuaisDiagnostico = manuaisDiagnostico.length;
 
-        while (true) {
-            System.out.println("Escolha uma opção:");
-            System.out.println("1 - Inserir um novo manual");
-            System.out.println("2 - Ver manuais existentes");
-            System.out.println("3 - Apagar um manual existente");
-            System.out.println("4 - Editar um manual existente");
-            System.out.println("5 - Encerrar o programa");
+        Scanner scanner = new Scanner(System.in);
 
+        // Começo
+        System.out.println("Escolha um idioma para tradução:");
+        System.out.println("1. Português");
+        System.out.println("2. Inglês");
+        System.out.println("3. Espanhol");
+        System.out.println("4. Alemão");
+        System.out.print("Digite o número do idioma: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        // Salva o código do idioma selecionad
+        
+        System.out.println("Idioma inválido.");
+
+        // Mostrar "bem vindo"
+        System.out.println(mensagens.get(codigoIdioma));
+
+        while (true) { // loop infinito
+
+            // Cadastrar etc
+            String[] opcoes = opcoesMenu.get(codigoIdioma);
+            for (int i = 0; i < opcoes.length; i++) {
+                System.out.println((i + 1) + ". " + opcoes[i]);
+            }
+
+            // "Digite sua escolha"
+            System.out.print(mensagemEscolha.get(codigoIdioma));
+            int codigo = scanner.nextInt();
             int escolha = scanner.nextInt();
             scanner.nextLine();
 
             if (escolha == 1) {
+
+
                 System.out.println("Escolha o tipo de manual:");
                 System.out.println("1 - Manual de Manutenção");
                 System.out.println("2 - Manual de Operação");
@@ -124,7 +80,7 @@ public class WegOne {
                         novoManual.preencherDados();
                         manuaisManutencao[totalManuaisManutencao] = novoManual;
                         totalManuaisManutencao++;
-                        System.out.println("Novo manual inserido com sucesso!");
+                        System.out.println(getTransaltion("new-manual-success-message"));
                         break;
                     case 2:
                         if (totalManuaisOperacao == manuaisOperacao.length) {
