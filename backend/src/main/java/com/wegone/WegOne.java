@@ -18,8 +18,10 @@ public class WegOne {
 
         System.out.println("Escolha um idioma para tradução:");
         System.out.println("1. Português");
-        System.out.println("2. Inglês");
-        System.out.println("3. Alemão");
+        System.out.println("2. English");
+        System.out.println("3. Español");
+        System.out.println("4. Deutch");
+
         System.out.print("Digite o número do idioma: ");
         int opcao = scanner.nextInt();
         scanner.nextLine();
@@ -33,6 +35,9 @@ public class WegOne {
                 codigoIdioma = "en";
                 break;
             case 3:
+                codigoIdioma = "es";
+                break;
+            case 4:
                 codigoIdioma = "de";
                 break;
             default:
@@ -53,10 +58,7 @@ public class WegOne {
 
         traduzir("welcome");
 
-        /*
-         * Cadu: inseri aqui o código da antiga classe Principal, com algumas pequenas
-         * alterações para rodar sem conflitos
-         */
+
 
         ManualDeManutencao[] manuaisManutencao = Manuais.imprimirManualDeManutencao();
         ManualDeOperacao[] manuaisOperacao = Manuais.imprimirManualDeOperacao();
@@ -217,35 +219,35 @@ public class WegOne {
                 switch (tipoVisualizacao) {
                     case 1:
                         if (escolhaManual <= totalManuaisManutencao) {
-                            manuaisManutencao[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                            manuaisManutencao[escolhaManual - 1].exibirManual(); 
                         } else {
                             traduzir("invalid-option");
                         }
                         break;
                     case 2:
                         if (escolhaManual <= totalManuaisOperacao) {
-                            manuaisOperacao[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                            manuaisOperacao[escolhaManual - 1].exibirManual();
                         } else {
                             traduzir("invalid-option");
                         }
                         break;
                     case 3:
                         if (escolhaManual <= totalManuaisSeguranca) {
-                            manuaisSeguranca[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                            manuaisSeguranca[escolhaManual - 1].exibirManual();
                         } else {
                             traduzir("invalid-option");
                         }
                         break;
                     case 4:
                         if (escolhaManual <= totalManuaisConduta) {
-                            manuaisConduta[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                            manuaisConduta[escolhaManual - 1].exibirManual();
                         } else {
                             traduzir("invalid-option");
                         }
                         break;
                     case 5:
                         if (escolhaManual <= totalManuaisDiagnostico) {
-                            manuaisDiagnostico[escolhaManual - 1].exibirManual(); // Chama o método de instância
+                            manuaisDiagnostico[escolhaManual - 1].exibirManual(); 
                         } else {
                             traduzir("invalid-option");
                         }
@@ -253,7 +255,7 @@ public class WegOne {
                 }
 
             } else if (escolha == 3) {
-                            traduzir("chose-the-type-of-manual-to-delete");
+                traduzir("chose-the-type-of-manual-to-delete");
                 traduzir("manutencion-manual");
                 traduzir("operation-manual");
                 traduzir("security-manual");
@@ -265,7 +267,7 @@ public class WegOne {
 
                 switch (tipoApagar) {
                     case 1:
-                traduzir("chose-the-number-of-the-manual-to-delete");
+                        traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisManutencao; i++) {
                             System.out.println((i + 1) + " - " + manuaisManutencao[i].getTitulo());
                         }
@@ -277,13 +279,13 @@ public class WegOne {
                             }
                             manuaisManutencao[totalManuaisManutencao - 1] = null;
                             totalManuaisManutencao--;
-                traduzir("manual-deletede-sucessefully");
+                            traduzir("manual-deletede-sucessefully");
                         } else {
-                traduzir("invalid-option");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 2:
-                traduzir("chose-the-number-of-the-manual-to-delete");
+                        traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisOperacao; i++) {
                             System.out.println((i + 1) + " - " + manuaisOperacao[i].getTitulo());
                         }
@@ -295,13 +297,13 @@ public class WegOne {
                             }
                             manuaisOperacao[totalManuaisOperacao - 1] = null;
                             totalManuaisOperacao--;
-                traduzir("manual-deletede-sucessefully");
+                            traduzir("manual-deletede-sucessefully");
                         } else {
-                traduzir("invalid-option");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 3:
-                traduzir("chose-the-number-of-the-manual-to-delete");
+                        traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisSeguranca; i++) {
                             System.out.println((i + 1) + " - " + manuaisSeguranca[i].getTitulo());
                         }
@@ -313,13 +315,13 @@ public class WegOne {
                             }
                             manuaisSeguranca[totalManuaisSeguranca - 1] = null;
                             totalManuaisSeguranca--;
-                traduzir("manual-deletede-sucessefully");
+                            traduzir("manual-deletede-sucessefully");
                         } else {
-                traduzir("invalid-option");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 4:
-                traduzir("chose-the-number-of-the-manual-to-delete");
+                        traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisConduta; i++) {
                             System.out.println((i + 1) + " - " + manuaisConduta[i].getTitulo());
                         }
@@ -331,13 +333,13 @@ public class WegOne {
                             }
                             manuaisConduta[totalManuaisConduta - 1] = null;
                             totalManuaisConduta--;
-                traduzir("manual-deletede-sucessefully");
+                            traduzir("manual-deletede-sucessefully");
                         } else {
-                traduzir("invalid-option");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 5:
-                traduzir("chose-the-number-of-the-manual-to-delete");
+                        traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisDiagnostico; i++) {
                             System.out.println((i + 1) + " - " + manuaisDiagnostico[i].getTitulo());
                         }
@@ -349,18 +351,18 @@ public class WegOne {
                             }
                             manuaisDiagnostico[totalManuaisDiagnostico - 1] = null;
                             totalManuaisDiagnostico--;
-                traduzir("manual-deletede-sucessefully");
+                            traduzir("manual-deletede-sucessefully");
                         } else {
-                traduzir("invalid-option");
+                            traduzir("invalid-option");
                         }
                         break;
                     default:
-                traduzir("invalid-option");
+                        traduzir("invalid-option");
                 }
 
             } else if (escolha == 4) {
                 traduzir("chose-the-type-of-manual-to-edit");
-                 traduzir("manutencion-manual");
+                traduzir("manutencion-manual");
                 traduzir("operation-manual");
                 traduzir("security-manual");
                 traduzir("conduct-manual");
@@ -371,7 +373,7 @@ public class WegOne {
 
                 switch (tipoEditar) {
                     case 1:
-                traduzir("chose-the-type-of-manual-to-edit");
+                        traduzir("chose-the-type-of-manual-to-edit");
                         for (int i = 0; i < totalManuaisManutencao; i++) {
                             System.out.println((i + 1) + " - " + manuaisManutencao[i].getTitulo());
                         }
@@ -379,11 +381,12 @@ public class WegOne {
                         scanner.nextLine();
                         if (editarManutencao >= 1 && editarManutencao <= totalManuaisManutencao) {
                             ManualDeManutencao manual = manuaisManutencao[editarManutencao - 1];
-                            System.out.println("O que deseja editar?");
-                            System.out.println("1 - Título");
-                            System.out.println("2 - Autor");
-                            System.out.println("3 - Texto");
-                            System.out.println("4 - Data de Publicação");
+                            traduzir("what-do-you-want-to-edit");
+                            traduzir("manutencion-manual");
+                            traduzir("operation-manual");
+                            traduzir("security-manual");
+                            traduzir("conduct-manual");
+                            traduzir("diagnostic-manual");
                             int opcaoEdicao = scanner.nextInt();
                             scanner.nextLine();
 
@@ -401,14 +404,14 @@ public class WegOne {
                                     manual.editarDataPublicacao();
                                     break;
                                 default:
-                                    System.out.println("Opção inválida.");
+                                    traduzir("invalid-option");
                             }
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 2:
-                        System.out.println("Escolha o número do manual que deseja editar:");
+                        traduzir("chose-the-number-to-edit");
                         for (int i = 0; i < totalManuaisOperacao; i++) {
                             System.out.println((i + 1) + " - " + manuaisOperacao[i].getTitulo());
                         }
@@ -416,11 +419,11 @@ public class WegOne {
                         scanner.nextLine();
                         if (editarOperacao >= 1 && editarOperacao <= totalManuaisOperacao) {
                             ManualDeOperacao manual = manuaisOperacao[editarOperacao - 1];
-                            System.out.println("O que deseja editar?");
-                            System.out.println("1 - Título");
-                            System.out.println("2 - Autor");
-                            System.out.println("3 - Texto");
-                            System.out.println("4 - Data de Publicação");
+                            traduzir("what-you-want-to-edit");
+                            traduzir("title");
+                            traduzir("author");
+                            traduzir("text");
+                            traduzir("date-of-publication");
                             int opcaoEdicao = scanner.nextInt();
                             scanner.nextLine();
 
@@ -438,14 +441,14 @@ public class WegOne {
                                     manual.editarDataPublicacao();
                                     break;
                                 default:
-                                    System.out.println("Opção inválida.");
+                                    traduzir("invalid-option");
                             }
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 3:
-                        System.out.println("Escolha o número do manual que deseja editar:");
+                        traduzir("chose-the-number-to-edit");
                         for (int i = 0; i < totalManuaisSeguranca; i++) {
                             System.out.println((i + 1) + " - " + manuaisSeguranca[i].getTitulo());
                         }
@@ -453,11 +456,11 @@ public class WegOne {
                         scanner.nextLine();
                         if (editarSeguranca >= 1 && editarSeguranca <= totalManuaisSeguranca) {
                             ManualDeSeguranca manual = manuaisSeguranca[editarSeguranca - 1];
-                            System.out.println("O que deseja editar?");
-                            System.out.println("1 - Título");
-                            System.out.println("2 - Autor");
-                            System.out.println("3 - Texto");
-                            System.out.println("4 - Data de Publicação");
+                            traduzir("what-you-want-to-edit");
+                            traduzir("title");
+                            traduzir("author");
+                            traduzir("text");
+                            traduzir("date-of-publication");
                             int opcaoEdicao = scanner.nextInt();
                             scanner.nextLine();
 
@@ -475,14 +478,14 @@ public class WegOne {
                                     manual.editarDataPublicacao();
                                     break;
                                 default:
-                                    System.out.println("Opção inválida.");
+                                    traduzir("invalid-option");
                             }
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 4:
-                        System.out.println("Escolha o número do manual que deseja editar:");
+                        traduzir("chose-the-number-to-edit");
                         for (int i = 0; i < totalManuaisConduta; i++) {
                             System.out.println((i + 1) + " - " + manuaisConduta[i].getTitulo());
                         }
@@ -490,11 +493,11 @@ public class WegOne {
                         scanner.nextLine();
                         if (editarConduta >= 1 && editarConduta <= totalManuaisConduta) {
                             ManualDeCondutaOperacional manual = manuaisConduta[editarConduta - 1];
-                            System.out.println("O que deseja editar?");
-                            System.out.println("1 - Título");
-                            System.out.println("2 - Autor");
-                            System.out.println("3 - Texto");
-                            System.out.println("4 - Data de Publicação");
+                            traduzir("what-you-want-to-edit");
+                            traduzir("title");
+                            traduzir("author");
+                            traduzir("text");
+                            traduzir("date-of-publication");
                             int opcaoEdicao = scanner.nextInt();
                             scanner.nextLine();
 
@@ -512,14 +515,14 @@ public class WegOne {
                                     manual.editarDataPublicacao();
                                     break;
                                 default:
-                                    System.out.println("Opção inválida.");
+                                    traduzir("invalid-option");
                             }
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 5:
-                        System.out.println("Escolha o número do manual que deseja editar:");
+                        traduzir("chose-the-number-to-edit");
                         for (int i = 0; i < totalManuaisDiagnostico; i++) {
                             System.out.println((i + 1) + " - " + manuaisDiagnostico[i].getTitulo());
                         }
@@ -527,11 +530,11 @@ public class WegOne {
                         scanner.nextLine();
                         if (editarDiagnostico >= 1 && editarDiagnostico <= totalManuaisDiagnostico) {
                             ManualDeDiagnostico manual = manuaisDiagnostico[editarDiagnostico - 1];
-                            System.out.println("O que deseja editar?");
-                            System.out.println("1 - Título");
-                            System.out.println("2 - Autor");
-                            System.out.println("3 - Texto");
-                            System.out.println("4 - Data de Publicação");
+                            traduzir("what-you-want-to-edit");
+                            traduzir("title");
+                            traduzir("author");
+                            traduzir("text");
+                            traduzir("date-of-publication");
                             int opcaoEdicao = scanner.nextInt();
                             scanner.nextLine();
 
@@ -549,25 +552,24 @@ public class WegOne {
                                     manual.editarDataPublicacao();
                                     break;
                                 default:
-                                    System.out.println("Opção inválida.");
+                                    traduzir("invalid-option");
                             }
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     default:
-                        System.out.println("Opção inválida.");
+                        traduzir("invalid-option");
                 }
 
             } else if (escolha == 5) {
-                System.out.println("Encerrando o programa...");
+                traduzir("closing-the-program");
                 break;
             } else {
-                System.out.println("Opção inválida. Tente novamente.");
+                traduzir("invalid-optin-try-again");
             }
 
         }
-
 
         scanner.close();
 

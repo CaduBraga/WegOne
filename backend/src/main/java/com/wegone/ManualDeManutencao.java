@@ -2,11 +2,15 @@ package com.wegone;
 import java.util.Date;
 import java.util.Scanner;
 
+import org.json.JSONObject;
+
 public class ManualDeManutencao {
     private String titulo;
     private Date dataPublicacao;
     private String autor;
     private String texto;
+    
+    static JSONObject mensagensNoIdiomaEscolhido;
 
     public ManualDeManutencao(String titulo, Date dataPublicacao, String autor, String texto) {
         this.titulo = titulo;
@@ -143,4 +147,19 @@ public class ManualDeManutencao {
             System.out.println("Data de publicação atualizada para: " + this.dataPublicacao);
         }
     }
+    private static String obterMensagemTraduzida(String chaveParaTraduzir) {
+        String mensagem = chaveParaTraduzir;
+        try {
+            mensagem = mensagensNoIdiomaEscolhido.getString(chaveParaTraduzir);
+        } catch (Exception e) {
+            mensagem = chaveParaTraduzir;
+        }
+        return mensagem;
+    }
+
+    private static void traduzir(String chaveParaTraduzir) {
+        System.out.println(obterMensagemTraduzida(chaveParaTraduzir));
+    }
+
+
 }
