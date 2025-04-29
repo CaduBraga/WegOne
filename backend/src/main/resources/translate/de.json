@@ -1,0 +1,28 @@
+{
+    "Messages": {
+        "welcome": "Willkommen bei WegOne",
+        "choice-type-manual": "Wählen Sie den Typ des Handbuchs",
+        "maintenence-manual": "Wartungshandbuch",
+        "operation-manual": "Betriebshandbuch",
+        "security-manual": "Sicherheitshandbuch",
+        "operation-conduct-manual": "Handbuch für Betriebsvorschriften",
+        "diagnostic-manual": "Diagnosehandbuch",
+        "new-manual-sucessefully-added": "Neues Handbuch erfolgreich hinzugefügt",
+        "choice-the-type-of-manual-to-view": "Wählen Sie den Typ des Handbuchs zur Ansicht:",
+        "existing-manuals": "Vorhandene Handbücher:",
+        "invalid-option": "Ungültige Option!",
+        "select-a-manual-to-see-more-details": "Wählen Sie ein Handbuch, um mehr Details zu sehen:",
+        "choose-the-type-of-manual-you-want-to-delete": "Wählen Sie den Typ des Handbuchs, das Sie löschen möchten:",
+        "choose-the-number-of-the-manual-you-want-to-delete": "Wählen Sie die Nummer des Handbuchs, das Sie löschen möchten:",
+        "manual-sucessfully-deleted": "Handbuch erfolgreich gelöscht!",
+        "choose-the-type-of-the-manual-you-want-to-edit": "Wählen Sie den Typ des Handbuchs, das Sie bearbeiten möchten:",
+        "choose-the-number-of-the-manual-you-want-to-edit": "Wählen Sie die Nummer des Handbuchs, das Sie bearbeiten möchten:",
+        "what-would-you-want-to-edit": "Was möchten Sie bearbeiten?",
+        "title": "Titel",
+        "author": "Autor",
+        "text": "Text",
+        "publication-date": "Veröffentlichungsdatum",
+        "closing-the-program": "Programm wird beendet...",
+        "try-again": "Ungültige Option. Bitte versuchen Sie es erneut!"
+    }
+}

@@ -1,3 +1,4 @@
+package com.wegone;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -72,7 +73,7 @@ public class ManualDeOperacao {
     public void editarTitulo() {
         Scanner scanner = new Scanner(System.in);
         String novoTitulo;
-        
+
         do {
             System.out.println("Título atual: " + this.titulo);
             System.out.print("Digite o novo título: ");
