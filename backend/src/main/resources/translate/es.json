@@ -1,0 +1,28 @@
+{
+    "Messages": {
+        "welcome": "Bienvenido a WegOne",
+        "choice-type-manual": "Elige el tipo de manual",
+        "maintenence-manual": "Manual de mantenimiento",
+        "operation-manual": "Manual de operación",
+        "security-manual": "Manual de seguridad",
+        "operation-conduct-manual": "Manual de conducta operativa",
+        "diagnostic-manual": "Manual de diagnóstico",
+        "new-manual-sucessefully-added": "Nuevo manual agregado exitosamente",
+        "choice-the-type-of-manual-to-view": "Elige el tipo de manual para visualizar:",
+        "existing-manuals": "Manuales existentes:",
+        "invalid-option": "¡Opción inválida!",
+        "select-a-manual-to-see-more-details": "Selecciona un manual para ver más detalles:",
+        "choose-the-type-of-manual-you-want-to-delete": "Elige el tipo de manual que deseas eliminar:",
+        "choose-the-number-of-the-manual-you-want-to-delete": "Elige el número del manual que deseas eliminar:",
+        "manual-sucessfully-deleted": "¡Manual eliminado exitosamente!",
+        "choose-the-type-of-the-manual-you-want-to-edit": "Elige el tipo de manual que deseas editar:",
+        "choose-the-number-of-the-manual-you-want-to-edit": "Elige el número del manual que deseas editar:",
+        "what-would-you-want-to-edit": "¿Qué te gustaría editar?",
+        "title": "Título",
+        "author": "Autor",
+        "text": "Texto",
+        "publication-date": "Fecha de publicación",
+        "closing-the-program": "Cerrando el programa...",
+        "try-again": "Opción inválida. ¡Intenta nuevamente!"
+    }
+}

@@ -1,11 +1,62 @@
-package backend.src.main.java.com.wegone;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+package com.wegone;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Scanner;
+
+import org.json.JSONObject;
 
 public class WegOne {
-    public static void main(String[] args) {
+
+    static JSONObject mensagensNoIdiomaEscolhido;
+
+    public static void main(String[] args) throws IOException {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Escolha um idioma para tradução:");
+        System.out.println("1. Português");
+        System.out.println("2. Inglês");
+        System.out.println("3. Alemão");
+        System.out.print("Digite o número do idioma: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        String codigoIdioma = "";
+        switch (opcao) {
+            case 1:
+                codigoIdioma = "pt";
+                break;
+            case 2:
+                codigoIdioma = "en";
+                break;
+            case 3:
+                codigoIdioma = "de";
+                break;
+            default:
+                System.out.println("Idioma inválido.");
+                return;
+        }
+
+        InputStream inputStream = WegOne.class.getClassLoader()
+                .getResourceAsStream("translate/" + codigoIdioma + ".json");
+
+        if (inputStream == null) {
+            System.out.println("Arquivo não encontrado: translate/" + codigoIdioma + ".json");
+        }
+
+        String conteudo = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+
+        mensagensNoIdiomaEscolhido = new JSONObject(conteudo).getJSONObject("Messages");
+
+        traduzir("welcome");
+
+        /*
+         * Cadu: inseri aqui o código da antiga classe Principal, com algumas pequenas
+         * alterações para rodar sem conflitos
+         */
 
         ManualDeManutencao[] manuaisManutencao = Manuais.imprimirManualDeManutencao();
         ManualDeOperacao[] manuaisOperacao = Manuais.imprimirManualDeOperacao();
@@ -19,48 +70,24 @@ public class WegOne {
         int totalManuaisConduta = manuaisConduta.length;
         int totalManuaisDiagnostico = manuaisDiagnostico.length;
 
-        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            traduzir("chose-an-option");
+            traduzir("insert-an-new-manual");
+            traduzir("view-manuals");
+            traduzir("delete-an-manual");
+            traduzir("edit-an-existence-manual");
+            traduzir("close-program");
 
-        // Começo
-        System.out.println("Escolha um idioma para tradução:");
-        System.out.println("1. Português");
-        System.out.println("2. Inglês");
-        System.out.println("3. Espanhol");
-        System.out.println("4. Alemão");
-        System.out.print("Digite o número do idioma: ");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
-
-        // Salva o código do idioma selecionad
-        
-        System.out.println("Idioma inválido.");
-
-        // Mostrar "bem vindo"
-        System.out.println(mensagens.get(codigoIdioma));
-
-        while (true) { // loop infinito
-
-            // Cadastrar etc
-            String[] opcoes = opcoesMenu.get(codigoIdioma);
-            for (int i = 0; i < opcoes.length; i++) {
-                System.out.println((i + 1) + ". " + opcoes[i]);
-            }
-
-            // "Digite sua escolha"
-            System.out.print(mensagemEscolha.get(codigoIdioma));
-            int codigo = scanner.nextInt();
             int escolha = scanner.nextInt();
             scanner.nextLine();
 
             if (escolha == 1) {
-
-
-                System.out.println("Escolha o tipo de manual:");
-                System.out.println("1 - Manual de Manutenção");
-                System.out.println("2 - Manual de Operação");
-                System.out.println("3 - Manual de Segurança");
-                System.out.println("4 - Manual de Conduta Operacional");
-                System.out.println("5 - Manual de Diagnóstico");
+                traduzir("chose-the-type-of-manual");
+                traduzir("manutencion-manual");
+                traduzir("operation-manual");
+                traduzir("security-manual");
+                traduzir("conduct-manual");
+                traduzir("diagnostic-manual");
 
                 int tipoManual = scanner.nextInt();
                 scanner.nextLine();
@@ -80,7 +107,7 @@ public class WegOne {
                         novoManual.preencherDados();
                         manuaisManutencao[totalManuaisManutencao] = novoManual;
                         totalManuaisManutencao++;
-                        System.out.println(getTransaltion("new-manual-success-message"));
+                        traduzir("new-manual-sucessfully-inserted");
                         break;
                     case 2:
                         if (totalManuaisOperacao == manuaisOperacao.length) {
@@ -92,7 +119,7 @@ public class WegOne {
                         novoManualOperacao.preencherDados();
                         manuaisOperacao[totalManuaisOperacao] = novoManualOperacao;
                         totalManuaisOperacao++;
-                        System.out.println("Novo manual inserido com sucesso!");
+                        traduzir("new-manual-sucessfully-inserted");
                         break;
                     case 3:
                         if (totalManuaisSeguranca == manuaisSeguranca.length) {
@@ -104,7 +131,7 @@ public class WegOne {
                         novoManualSeguranca.preencherDados();
                         manuaisSeguranca[totalManuaisSeguranca] = novoManualSeguranca;
                         totalManuaisSeguranca++;
-                        System.out.println("Novo manual inserido com sucesso!");
+                        traduzir("new-manual-sucessfully-inserted");
                         break;
                     case 4:
                         if (totalManuaisConduta == manuaisConduta.length) {
@@ -118,7 +145,7 @@ public class WegOne {
                         novoManualConduta.preencherDados();
                         manuaisConduta[totalManuaisConduta] = novoManualConduta;
                         totalManuaisConduta++;
-                        System.out.println("Novo manual inserido com sucesso!");
+                        traduzir("new-manual-sucessfully-inserted");
                         break;
                     case 5:
                         if (totalManuaisDiagnostico == manuaisDiagnostico.length) {
@@ -130,60 +157,60 @@ public class WegOne {
                         novoManualDiagnostico.preencherDados();
                         manuaisDiagnostico[totalManuaisDiagnostico] = novoManualDiagnostico;
                         totalManuaisDiagnostico++;
-                        System.out.println("Novo manual inserido com sucesso!");
+                        traduzir("new-manual-sucessfully-inserted");
                         break;
                     default:
-                        System.out.println("Opção inválida.");
+                        traduzir("invalid-option");
                 }
 
             } else if (escolha == 2) {
-                System.out.println("Escolha o tipo de manual para visualizar:");
-                System.out.println("1 - Manuais de Manutenção");
-                System.out.println("2 - Manuais de Operação");
-                System.out.println("3 - Manuais de Segurança");
-                System.out.println("4 - Manuais de Conduta Operacional");
-                System.out.println("5 - Manuais de Diagnóstico");
+                traduzir("chose-the-type-of-manual-to-view");
+                traduzir("manutencion-manual");
+                traduzir("operation-manual");
+                traduzir("security-manual");
+                traduzir("conduct-manual");
+                traduzir("diagnostic-manual");
 
                 int tipoVisualizacao = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (tipoVisualizacao) {
                     case 1:
-                        System.out.println("Manuais de Manutenção existentes:");
+                        traduzir("manutencion-manuals-existing");
                         for (int i = 0; i < totalManuaisManutencao; i++) {
                             System.out.println((i + 1) + " - " + manuaisManutencao[i].getTitulo());
                         }
                         break;
                     case 2:
-                        System.out.println("Manuais de Operação existentes:");
+                        traduzir("operation-manuals-existing");
                         for (int i = 0; i < totalManuaisOperacao; i++) {
                             System.out.println((i + 1) + " - " + manuaisOperacao[i].getTitulo());
                         }
                         break;
                     case 3:
-                        System.out.println("Manuais de Segurança existentes:");
+                        traduzir("security-manuals-existing");
                         for (int i = 0; i < totalManuaisSeguranca; i++) {
                             System.out.println((i + 1) + " - " + manuaisSeguranca[i].getTitulo());
                         }
                         break;
                     case 4:
-                        System.out.println("Manuais de Conduta Operacional existentes:");
+                        traduzir("operacional-conduct-existing");
                         for (int i = 0; i < totalManuaisConduta; i++) {
                             System.out.println((i + 1) + " - " + manuaisConduta[i].getTitulo());
                         }
                         break;
                     case 5:
-                        System.out.println("Manuais de Diagnóstico existentes:");
+                        traduzir("diagnostic-manuals-existing");
                         for (int i = 0; i < totalManuaisDiagnostico; i++) {
                             System.out.println((i + 1) + " - " + manuaisDiagnostico[i].getTitulo());
                         }
                         break;
                     default:
-                        System.out.println("Opção inválida.");
-                        continue; // Volta para o início do loop (contrário do break)
+                        traduzir("invalid-option");
+                        continue;
                 }
 
-                System.out.println("Selecione um manual para ver mais detalhes:");
+                traduzir("select-a-manual-to-see-more-details");
                 int escolhaManual = scanner.nextInt();
                 scanner.nextLine();
 
@@ -192,53 +219,53 @@ public class WegOne {
                         if (escolhaManual <= totalManuaisManutencao) {
                             manuaisManutencao[escolhaManual - 1].exibirManual(); // Chama o método de instância
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 2:
                         if (escolhaManual <= totalManuaisOperacao) {
                             manuaisOperacao[escolhaManual - 1].exibirManual(); // Chama o método de instância
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 3:
                         if (escolhaManual <= totalManuaisSeguranca) {
                             manuaisSeguranca[escolhaManual - 1].exibirManual(); // Chama o método de instância
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 4:
                         if (escolhaManual <= totalManuaisConduta) {
                             manuaisConduta[escolhaManual - 1].exibirManual(); // Chama o método de instância
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                     case 5:
                         if (escolhaManual <= totalManuaisDiagnostico) {
                             manuaisDiagnostico[escolhaManual - 1].exibirManual(); // Chama o método de instância
                         } else {
-                            System.out.println("Opção inválida.");
+                            traduzir("invalid-option");
                         }
                         break;
                 }
 
             } else if (escolha == 3) {
-                System.out.println("Escolha o tipo de manual que deseja apagar:");
-                System.out.println("1 - Manuais de Manutenção");
-                System.out.println("2 - Manuais de Operação");
-                System.out.println("3 - Manuais de Segurança");
-                System.out.println("4 - Manuais de Conduta Operacional");
-                System.out.println("5 - Manuais de Diagnóstico");
+                            traduzir("chose-the-type-of-manual-to-delete");
+                traduzir("manutencion-manual");
+                traduzir("operation-manual");
+                traduzir("security-manual");
+                traduzir("conduct-manual");
+                traduzir("diagnostic-manual");
 
                 int tipoApagar = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (tipoApagar) {
                     case 1:
-                        System.out.println("Escolha o número do manual que deseja apagar:");
+                traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisManutencao; i++) {
                             System.out.println((i + 1) + " - " + manuaisManutencao[i].getTitulo());
                         }
@@ -250,13 +277,13 @@ public class WegOne {
                             }
                             manuaisManutencao[totalManuaisManutencao - 1] = null;
                             totalManuaisManutencao--;
-                            System.out.println("Manual apagado com sucesso!");
+                traduzir("manual-deletede-sucessefully");
                         } else {
-                            System.out.println("Opção inválida.");
+                traduzir("invalid-option");
                         }
                         break;
                     case 2:
-                        System.out.println("Escolha o número do manual que deseja apagar:");
+                traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisOperacao; i++) {
                             System.out.println((i + 1) + " - " + manuaisOperacao[i].getTitulo());
                         }
@@ -268,13 +295,13 @@ public class WegOne {
                             }
                             manuaisOperacao[totalManuaisOperacao - 1] = null;
                             totalManuaisOperacao--;
-                            System.out.println("Manual apagado com sucesso!");
+                traduzir("manual-deletede-sucessefully");
                         } else {
-                            System.out.println("Opção inválida.");
+                traduzir("invalid-option");
                         }
                         break;
                     case 3:
-                        System.out.println("Escolha o número do manual que deseja apagar:");
+                traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisSeguranca; i++) {
                             System.out.println((i + 1) + " - " + manuaisSeguranca[i].getTitulo());
                         }
@@ -286,13 +313,13 @@ public class WegOne {
                             }
                             manuaisSeguranca[totalManuaisSeguranca - 1] = null;
                             totalManuaisSeguranca--;
-                            System.out.println("Manual apagado com sucesso!");
+                traduzir("manual-deletede-sucessefully");
                         } else {
-                            System.out.println("Opção inválida.");
+                traduzir("invalid-option");
                         }
                         break;
                     case 4:
-                        System.out.println("Escolha o número do manual que deseja apagar:");
+                traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisConduta; i++) {
                             System.out.println((i + 1) + " - " + manuaisConduta[i].getTitulo());
                         }
@@ -304,13 +331,13 @@ public class WegOne {
                             }
                             manuaisConduta[totalManuaisConduta - 1] = null;
                             totalManuaisConduta--;
-                            System.out.println("Manual apagado com sucesso!");
+                traduzir("manual-deletede-sucessefully");
                         } else {
-                            System.out.println("Opção inválida.");
+                traduzir("invalid-option");
                         }
                         break;
                     case 5:
-                        System.out.println("Escolha o número do manual que deseja apagar:");
+                traduzir("chose-the-number-of-the-manual-to-delete");
                         for (int i = 0; i < totalManuaisDiagnostico; i++) {
                             System.out.println((i + 1) + " - " + manuaisDiagnostico[i].getTitulo());
                         }
@@ -322,29 +349,29 @@ public class WegOne {
                             }
                             manuaisDiagnostico[totalManuaisDiagnostico - 1] = null;
                             totalManuaisDiagnostico--;
-                            System.out.println("Manual apagado com sucesso!");
+                traduzir("manual-deletede-sucessefully");
                         } else {
-                            System.out.println("Opção inválida.");
+                traduzir("invalid-option");
                         }
                         break;
                     default:
-                        System.out.println("Opção inválida.");
+                traduzir("invalid-option");
                 }
 
             } else if (escolha == 4) {
-                System.out.println("Escolha o tipo de manual que deseja editar:");
-                System.out.println("1 - Manuais de Manutenção");
-                System.out.println("2 - Manuais de Operação");
-                System.out.println("3 - Manuais de Segurança");
-                System.out.println("4 - Manuais de Conduta Operacional");
-                System.out.println("5 - Manuais de Diagnóstico");
+                traduzir("chose-the-type-of-manual-to-edit");
+                 traduzir("manutencion-manual");
+                traduzir("operation-manual");
+                traduzir("security-manual");
+                traduzir("conduct-manual");
+                traduzir("diagnostic-manual");
 
                 int tipoEditar = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (tipoEditar) {
                     case 1:
-                        System.out.println("Escolha o número do manual que deseja editar:");
+                traduzir("chose-the-type-of-manual-to-edit");
                         for (int i = 0; i < totalManuaisManutencao; i++) {
                             System.out.println((i + 1) + " - " + manuaisManutencao[i].getTitulo());
                         }
@@ -541,9 +568,23 @@ public class WegOne {
 
         }
 
-        // Aqui você pode adicionar a lógica para cada opção do menu
 
-        // Fechar o scanner
         scanner.close();
+
     }
+
+    private static String obterMensagemTraduzida(String chaveParaTraduzir) {
+        String mensagem = chaveParaTraduzir;
+        try {
+            mensagem = mensagensNoIdiomaEscolhido.getString(chaveParaTraduzir);
+        } catch (Exception e) {
+            mensagem = chaveParaTraduzir;
+        }
+        return mensagem;
+    }
+
+    private static void traduzir(String chaveParaTraduzir) {
+        System.out.println(obterMensagemTraduzida(chaveParaTraduzir));
+    }
+
 }
