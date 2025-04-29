@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WegOne</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #e6f0ff;
+            color: #003366;
+        }
+        header {
+            background-color: #0055cc;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav select {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: none;
+            margin-left: 10px;
+        }
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .flag {
+            width: 30px;
+            height: auto;
+            margin-left: 5px;
+        }
+        .menu-option {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+            background-color: #0055cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-option:hover {
+            background-color: #003366;
+        }
+        .form-container {
+            margin-top: 20px;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+        }
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+
+        img {
+            width: 55px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+
+<header>
+    <div>
+        <img src="/imagens/logo.png" alt="Weg Logo">
+    </div>
+    <nav>
+        <select id="languageSelector" onchange="changeLanguage()">
+            <option value="pt">Português</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="es">Español</option>
+        </select>
+        <img id="flag" class="flag" src="https://flagpedia.net/data/flags/h80/br.png" alt="Bandeira" />
+    </nav>
+</header>
+
+
+<main>
+    <h1 id="mainTitle">Bem-vindo à WegOne</h1>
+    <p id="mainParagraph">Escolha uma opção abaixo para começar.</p>
+
+
+    <div>
+        <button class="menu-option" onclick="showForm('cadastro')">Cadastrar Orientação</button>
+        <button class="menu-option" onclick="showForm('pesquisa')">Pesquisar Orientação</button>
+        <button class="menu-option" onclick="showForm('editar')">Editar Orientação</button>
+        <button class="menu-option" onclick="showForm('excluir')">Excluir Orientação</button>
+    </div>
+
+
+    <div id="form-container" class="form-container" style="display:none;">
+        <h2 id="formTitle">Cadastro de Orientação</h2>
+
+
+        <div id="cadastro-form" style="display:none;">
+            <label for="Nome">Nome da Orientação:</label>
+            <input type="text" id="Nome" placeholder="Digite o nome" required>
+
+
+            <label for="tipo">Tipo da Orientação:</label>
+            <select id="tipo">
+                <option value="Manual de Operação">Manual de Operação</option>
+                <option value="Procedimento de Segurança">Procedimento de Segurança</option>
+                <option value="Manutenção e Reparos">Manutenção e Reparos</option>
+                <option value="Testes e Diagnóstico">Testes e Diagnóstico</option>
+                <option value="Manual de Conduta e Operações Setoriais">Manual de Conduta e Operações Setoriais</option>
+            </select>
+
+
+            <label for="conteudo-pt">Conteúdo (Português):</label>
+            <textarea id="conteudo-pt" rows="4" placeholder="Digite o conteúdo em português" required></textarea>
+
+
+            <label for="conteudo-en">Conteúdo (Inglês):</label>
+            <textarea id="conteudo-en" rows="4" placeholder="Digite o conteúdo em inglês" required></textarea>
+
+
+            <label for="conteudo-de">Conteúdo (Alemão):</label>
+            <textarea id="conteudo-de" rows="4" placeholder="Digite o conteúdo em alemão" required></textarea>
+
+
+            <button class="menu-option" onclick="cadastrarOrientacao()">Cadastrar</button>
+        </div>
+
+
+        <div id="pesquisa-form" style="display:none;">
+            <label for="pesquisaNome">Pesquisar por Nome:</label>
+            <input type="text" id="pesquisaNome" placeholder="Digite o nome da orientação">
+            <button class="menu-option" onclick="pesquisarOrientacao()">Pesquisar</button>
+        </div>
+
+
+        <div id="editar-form" style="display:none;">
+            <label for="editarNome">Nome da Orientação:</label>
+            <input type="text" id="editarNome" placeholder="Digite o nome" required>
+            <button class="menu-option" onclick="editarOrientacao()">Editar</button>
+        </div>
+
+
+        <div id="excluir-form" style="display:none;">
+            <label for="excluirNome">Excluir Orientação (por Nome):</label>
+            <input type="text" id="excluirNome" placeholder="Digite o nome da orientação">
+            <button class="menu-option" onclick="excluirOrientacao()">Excluir</button>
+        </div>
+    </div>
+</main>
+
+
+<footer>
+    &copy; 2025 WegOne. Todos os direitos reservados.
+</footer>
+
+
+<script>
+    const translations = {
+        pt: {
+            title: "Bem-vindo à WegOne",
+            paragraph: "Escolha uma opção abaixo para começar.",
+            flag: "https://flagpedia.net/data/flags/h80/br.png"
+        },
+        en: {
+            title: "Welcome to WegOne",
+            paragraph: "Choose an option below to get started.",
+            flag: "https://flagpedia.net/data/flags/h80/us.png"
+        },
+        de: {
+            title: "Willkommen bei WegOne",
+            paragraph: "Wählen Sie eine Option unten, um zu beginnen.",
+            flag: "https://flagpedia.net/data/flags/h80/de.png"
+        },
+        es: {
+            title: "Bienvenido a WegOne",
+            paragraph: "Elige una opción abajo para comenzar.",
+            flag: "https://flagpedia.net/data/flags/h80/es.png"
+        }
+    };
+
+
+    function changeLanguage() {
+        const lang = document.getElementById('languageSelector').value;
+        document.getElementById('mainTitle').textContent = translations[lang].title;
+        document.getElementById('mainParagraph').textContent = translations[lang].paragraph;
+        document.getElementById('flag').src = translations[lang].flag;
+    }
+
+
+    function showForm(formType) {
+        document.getElementById('form-container').style.display = 'block';
+        document.getElementById('cadastro-form').style.display = formType === 'cadastro' ? 'block' : 'none';
+        document.getElementById('pesquisa-form').style.display = formType === 'pesquisa' ? 'block' : 'none';
+        document.getElementById('editar-form').style.display = formType === 'editar' ? 'block' : 'none';
+        document.getElementById('excluir-form').style.display = formType === 'excluir' ? 'block' : 'none';
+    }
+
+
+    const orientacoes = [];
+
+
+    function cadastrarOrientacao() {
+        const nome = document.getElementById('Nome').value;
+        const tipo = document.getElementById('tipo').value;
+        const conteudoPt = document.getElementById('conteudo-pt').value;
+        const conteudoEn = document.getElementById('conteudo-en').value;
+        const conteudoDe = document.getElementById('conteudo-de').value;
+
+
+        orientacoes.push({ nome, tipo, conteudoPt, conteudoEn, conteudoDe });
+
+
+        Swal.fire('Sucesso!', 'Orientação cadastrada com sucesso!', 'success');
+       
+        document.getElementById('Nome').value = '';
+        document.getElementById('tipo').value = 'Manual de Operação';
+        document.getElementById('conteudo-pt').value = '';
+        document.getElementById('conteudo-en').value = '';
+        document.getElementById('conteudo-de').value = '';
+    }
+
+
+    function pesquisarOrientacao() {
+        const pesquisaNome = document.getElementById('pesquisaNome').value.toLowerCase();
+        const resultados = orientacoes.filter(orientacao => orientacao.nome.toLowerCase().includes(pesquisaNome));
+
+
+        if (resultados.length > 0) {
+            let mensagem = 'Resultados encontrados:\n';
+            resultados.forEach(orientacao => {
+                mensagem += `Nome: ${orientacao.nome}, Tipo: ${orientacao.tipo}\n`;
+            });
+            Swal.fire('Resultados da Pesquisa', mensagem, 'info');
+        } else {
+            Swal.fire('Nenhum resultado', 'Nenhuma orientação encontrada com esse nome.', 'warning');
+        }
+    }
+
+
+    async function editarOrientacao() {
+    const nomeAntigo = document.getElementById('editarNome').value;
+    if (!nomeAntigo) {
+        Swal.fire('Erro', 'Por favor, digite o nome da orientação a ser editada.', 'error');
+        return;
+    }
+
+
+    const index = orientacoes.findIndex(orientacao => orientacao.nome.toLowerCase() === nomeAntigo.toLowerCase());
+    if (index === -1) {
+        Swal.fire('Erro', `A orientação "${nomeAntigo}" não foi encontrada.`, 'error');
+        return;
+    }
+
+
+    const { value: confirmText } = await Swal.fire({
+        title: 'Confirmação',
+        text: 'Digite "confirmar" para editar a orientação',
+        input: 'text',
+        inputPlaceholder: 'Digite confirmar aqui',
+        showCancelButton: true
+    });
+
+
+    if (confirmText && confirmText.toLowerCase() === 'confirmar') {
+        const novoNome = await Swal.fire({
+            title: 'Novo Nome',
+            input: 'text',
+            inputLabel: 'Digite o novo nome da orientação',
+            inputPlaceholder: 'Novo nome',
+            showCancelButton: true
+        });
+
+
+        const novoTipo = await Swal.fire({
+            title: 'Novo Tipo',
+            input: 'select',
+            inputOptions: {
+                'Manual de Operação': 'Manual de Operação',
+                'Procedimento de Segurança': 'Procedimento de Segurança',
+                'Manutenção e Reparos': 'Manutenção e Reparos',
+                'Testes e Diagnóstico': 'Testes e Diagnóstico',
+                'Manual de Conduta e Operações Setoriais': 'Manual de Conduta e Operações Setoriais'
+            },
+            inputPlaceholder: 'Selecione o novo tipo',
+            showCancelButton: true
+        });
+
+
+        if (novoNome.value && novoTipo.value) {
+            orientacoes[index].nome = novoNome.value;
+            orientacoes[index].tipo = novoTipo.value;
+            Swal.fire('Editado!', `A orientação foi editada para "${novoNome.value}" e tipo "${novoTipo.value}".`, 'success');
+        } else {
+            Swal.fire('Erro', 'Nome ou tipo não podem ser vazios.', 'error');
+        }
+    } else {
+        Swal.fire('Cancelado', 'Edição cancelada ou confirmação incorreta.', 'error');
+    }
+}
+
+
+    async function excluirOrientacao() {
+        const nome = document.getElementById('excluirNome').value;
+        if (!nome) {
+            Swal.fire('Erro', 'Por favor, digite o nome da orientação a ser excluída.', 'error');
+            return;
+        }
+
+
+        const { value: confirmText } = await Swal.fire({
+            title: 'Confirmação',
+            text: `Tem certeza que deseja excluir "${nome}"? Digite "confirmar" para continuar.`,
+            input: 'text',
+            inputPlaceholder: 'Digite confirmar aqui',
+            showCancelButton: true
+        });
+
+
+        if (confirmText && confirmText.toLowerCase() === 'confirmar') {
+            const index = orientacoes.findIndex(orientacao => orientacao.nome.toLowerCase() === nome.toLowerCase());
+            if (index !== -1) {
+                orientacoes.splice(index, 1);
+                Swal.fire('Excluído!', `A orientação "${nome}" foi excluída com sucesso!`, 'success');
+            } else {
+                Swal.fire('Erro', `A orientação "${nome}" não foi encontrada.`, 'error');
+            }
+        } else {
+            Swal.fire('Cancelado', 'Exclusão cancelada ou confirmação incorreta.', 'error');
+        }
+    }
+</script>
+
+
+</body>
+</html>
