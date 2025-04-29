@@ -2,13 +2,13 @@
     "Messages": {
         "welcome": "Bem-vindo ao WegOne",
         "chose-an-option": "Escolha uma opção",
-        "insert-an-new-manual": "1 - Inserir um novo manual",
-        "view-manuals": "2 - Ver manuais existentes",
-        "delete-an-manual": "3 - Apagar um manual existente",
+        "insert-an-new-manual": "1- Inserir um novo manual",
+        "view-manuals": "2- Ver manuais existentes",
+        "delete-an-manual": "3- Apagar um manual existente",
         "edit-an-existence-manual": "4 - Editar um manual existente",
         "close-program": "5 - Encerrar o programa",
         "chose-the-type-of-manual": "Escolha o tipo de manual:",
-        "manutencion-manual": "1 - Manual de Manutenção",
+        "manutencion-manual": "1- Manual de Manutenção",
         "operation-manual": "2 - Manual de Operação",
         "security-manual": "3 - Manual de Segurança",
         "conduct-manual": "4 - Manual de Conduta Operacional",
@@ -25,16 +25,7 @@
         "chose-the-type-of-manual-to-delete":"Escolha o tipo de manual que deseja apagar",
         "chose-the-number-of-the-manual-to-delete":"Escolha o número do manual que deseja apagar",
         "manual-deleted-sucessefully":"Manual apagado com sucesso!",
-        "chose-the-type-of-manual-to-edit":"Escolha o tipo de manual que deseja editar:",
-        "what-you-want-to-edit":"O que deseja editar?",
-        "title":"1 - Título",
-        "author":"2 - Autor",
-        "text":"3 - Texto",
-        "date-of-publication":"4 - Data de Publicação",
-        "chose-the-number-to-edit":"Escolha o número do manual que deseja editar:",
-        "closing-program":"Encerrando o programa...",
-        "invalid-option-try-again":"Opção inválida. Tente novamente.",
-        "manual-of-manutencion-repared":"=== MANUAL DE MANUTENÇÃO E REPAROS ==="
+        "chose-the-type-of-manual-to-edit":"Escolha o tipo de manual que deseja editar:"
 
     }
 }
