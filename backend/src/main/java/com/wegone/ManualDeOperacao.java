@@ -1,4 +1,4 @@
-package backend.src.main.java.com.wegone;
+package com.wegone;
 import java.util.Date;
 import java.util.Scanner;
 

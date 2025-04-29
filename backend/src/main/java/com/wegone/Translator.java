@@ -1,6 +1,9 @@
-package backend.src.main.java.com.wegone;
+package com.wegone;
 
 import java.util.Map;
+
+import com.google.gson.Gson;
+
 import java.io.FileReader;
 import java.io.IOException;
 
