@@ -3,11 +3,8 @@ package com.wegone;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
-
 import org.json.JSONObject;
 
 public class WegOne {
@@ -15,7 +12,6 @@ public class WegOne {
     static JSONObject mensagensNoIdiomaEscolhido;
 
     public static void main(String[] args) throws IOException {
-
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Escolha um idioma para tradução:");
@@ -52,19 +48,16 @@ public class WegOne {
 
         if (inputStream == null) {
             System.out.println("Arquivo não encontrado: translate/" + codigoIdioma + ".json");
+            return;
         }
 
         String conteudo = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-
         mensagensNoIdiomaEscolhido = new JSONObject(conteudo).getJSONObject("Messages");
 
         traduzir("welcome");
 
-        Manual[] manuais = Manual.imprimirManuais();
-
-        int totalManuais = manuais.length;
-
         while (true) {
+
             traduzir("chose-an-option");
             traduzir("insert-an-new-manual");
             traduzir("view-manuals");
@@ -77,155 +70,164 @@ public class WegOne {
 
             switch (escolha) {
                 case 1:
-
-                    if (totalManuais == manuais.length) {
-                        /*
-                         * sempre que acabar o espaço do array ele vai criar um novo, duplicar o espaço
-                         * e copiar os arquivos nele novamente
-                         */
-                        Manual[] novoArray = new Manual[manuais.length * 2];
-                        System.arraycopy(manuais, 0, novoArray, 0, manuais.length);
-                        manuais = novoArray;
-                    }
-                    Manual novoManual = new Manual("", new Date(), "", "", null); // cria um objeto vazio
+                    Manual novoManual = new Manual();
                     novoManual.cadastrar();
-                    manuais[totalManuais++] = novoManual;
 
                     break;
 
                 case 2:
-                    
-                    traduzir("chose-the-type-of-manual");
-                    TipoManual[] tipos = TipoManual.values();
-                    for (int i = 0; i < tipos.length; i++) {
-                        System.out.printf("%d - %s%n", i + 1, tipos[i].getDescricao());
-                    }
-                    System.out.print("> ");
-                    int escolhaTipo = scanner.nextInt();
-                    scanner.nextLine();
-
-
-                    if (escolhaTipo < 1 || escolhaTipo > tipos.length) {
-                        traduzir("invalid-option");
+                    Manual[] todos = Manual.buscarManuaisDoBanco();
+                    if (todos.length == 0) {
+                        System.out.println("Nenhum manual cadastrado.");
                     } else {
-                        TipoManual tipoEscolhido = tipos[escolhaTipo - 1];
-
-                        System.out.println("Manuais de “" + tipoEscolhido.getDescricao() + "”:");
-                        int count = 0;
-                        int[] indices = new int[totalManuais]; 
-
-                        for (int i = 0; i < totalManuais; i++) {
-                            Manual m = manuais[i];
-                            if (m.getTipo() == tipoEscolhido) {
-                                count++;
-                                indices[count - 1] = i;
-                                System.out.printf("%d - %s%n", count, m.getTitulo());
-                            }
+                        System.out.println("Manuais cadastrados:");
+                        for (int i = 0; i < todos.length; i++) {
+                            System.out.printf("%d - %s%n", i + 1, todos[i].getTitulo());
                         }
-
-                        if (count == 0) {
-                            System.out.println("Nenhum manual encontrado.");
-                        } else {
-                            
-                            System.out.print("Digite o número do manual para ver detalhes: ");
-                            int escolhaManual = scanner.nextInt();
-                            scanner.nextLine();
-
-                            if (escolhaManual < 1 || escolhaManual > count) {
-                                traduzir("invalid-option");
-                            } else {
-                                Manual selecionado = manuais[indices[escolhaManual - 1]];
-                                System.out.println("\n—— Detalhes do Manual ——");
-                                selecionado.imprimir();
-                            }
+                        System.out.print("Escolha um manual para detalhes (0 para sair): ");
+                        int idx = scanner.nextInt();
+                        scanner.nextLine();
+                        if (idx >= 1 && idx <= todos.length) {
+                            todos[idx - 1].imprimir();
                         }
                     }
-
                     break;
+
                 case 3:
 
-                    traduzir("chose-the-number-of-the-manual-to-delete");
-                    for (int i = 0; i < totalManuais; i++) {
-                        System.out.println((i + 1) + " - " + manuais[i].getTitulo());
+                    traduzir("chose-the-type-of-manual-to-delete");
+                    TipoManual[] tiposDel = TipoManual.values();
+                    for (int i = 0; i < tiposDel.length; i++) {
+                        System.out.printf("%d) %s%n", i + 1, tiposDel[i].getDescricao());
                     }
-                    int apagarManutencao = scanner.nextInt();
+                    System.out.print("> ");
+                    int tipoIdxDel = scanner.nextInt();
                     scanner.nextLine();
-                    if (apagarManutencao >= 1 && apagarManutencao <= totalManuais) {
-                        for (int i = apagarManutencao - 1; i < totalManuais - 1; i++) {
-                            manuais[i] = manuais[i + 1];
-                        }
-                        manuais[totalManuais - 1] = null;
-                        totalManuais--;
-                        traduzir("manual-deletede-sucessefully");
+                    if (tipoIdxDel < 1 || tipoIdxDel > tiposDel.length) {
+                        traduzir("invalid-option");
+                        break;
+                    }
+                    TipoManual tipoParaDel = tiposDel[tipoIdxDel - 1];
+
+                    Manual[] todosParaDel = Manual.buscarManuaisDoBanco();
+                    Manual[] filtradosDel = Arrays.stream(todosParaDel)
+                            .filter(m -> m.getTipo() == tipoParaDel)
+                            .toArray(Manual[]::new);
+
+                    if (filtradosDel.length == 0) {
+                        traduzir("no-manual-found-of-this-type");
+                        break;
                     }
 
+                    traduzir("manuals-available-to-delete");
+                    for (int i = 0; i < filtradosDel.length; i++) {
+                        System.out.printf("%d) %s%n", i + 1, filtradosDel[i].getTitulo());
+                    }
+                    traduzir("chose-the-number-of-the-manual-to-delete");
+                    int del = scanner.nextInt();
+                    scanner.nextLine();
+                    if (del < 1 || del > filtradosDel.length) {
+                        traduzir("invalid-option");
+                        break;
+                    }
+                    Manual.excluirPorId(filtradosDel[del - 1].getIdManual());
+                    traduzir("manual-deleted-succesfully");
                     break;
 
                 case 4:
-
-                    traduzir("chose-the-number-to-edit");
-                    for (int i = 0; i < totalManuais; i++) {
-                        System.out.println((i + 1) + " - " + manuais[i].getTitulo());
+                    traduzir("chose-the-type-of-manual");
+                    TipoManual[] tiposEd = TipoManual.values();
+                    for (int i = 0; i < tiposEd.length; i++) {
+                        System.out.printf("%d) %s%n", i + 1, tiposEd[i].getDescricao());
                     }
-                    int editarOperacao = scanner.nextInt();
+                    System.out.print("> ");
+                    int tipoIdxEd = scanner.nextInt();
                     scanner.nextLine();
-                    if (editarOperacao >= 1 && editarOperacao <= totalManuais) {
-                        Manual manual = manuais[editarOperacao - 1];
-                        traduzir("what-you-want-to-edit");
-                        traduzir("title");
-                        traduzir("author");
-                        traduzir("text");
-                        traduzir("date-of-publication");
-                        int opcaoEdicao = scanner.nextInt();
-                        scanner.nextLine();
-
-                        switch (opcaoEdicao) {
-                            case 1:
-                                manual.editarTitulo();
-                                break;
-                            case 2:
-                                manual.editarAutor();
-                                break;
-                            case 3:
-                                manual.editarTexto();
-                                break;
-                            case 4:
-                                manual.editarData();
-                                break;
-                            case 5:
-                                manual.editarTipo();
-                                break;
-
-                            default:
-                                traduzir("invalid-option");
-                        }
+                    if (tipoIdxEd < 1 || tipoIdxEd > tiposEd.length) {
+                        traduzir("invalid-option");
+                        break;
                     }
+                    TipoManual tipoParaEd = tiposEd[tipoIdxEd - 1];
+
+                    Manual[] todosParaEd = Manual.buscarManuaisDoBanco();
+                    Manual[] filtradosEd = Arrays.stream(todosParaEd)
+                            .filter(m -> m.getTipo() == tipoParaEd)
+                            .toArray(Manual[]::new);
+
+                    if (filtradosEd.length == 0) {
+                        traduzir("no-manual-found-of-this-type");
+                        break;
+                    }
+
+                    System.out.println("Manuais de “" + tipoParaEd.getDescricao() + "”:");
+                    for (int i = 0; i < filtradosEd.length; i++) {
+                        System.out.printf("%d) %s%n", i + 1, filtradosEd[i].getTitulo());
+                    }
+                    System.out.print("> ");
+                    int ed = scanner.nextInt();
+                    scanner.nextLine();
+                    if (ed < 1 || ed > filtradosEd.length) {
+                        traduzir("invalid-option");
+                        break;
+                    }
+                    int idEd = filtradosEd[ed - 1].getIdManual();
+
+                    traduzir("what-you-want-to-edit");
+                    traduzir("title");
+                    traduzir("author");
+                    traduzir("text");
+                    traduzir("date-of-publication");
+                    traduzir("type");
+                    int field = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (field) {
+                        case 1:
+                            System.out.print("> ");
+                            Manual.atualizarTitulo(idEd, scanner.nextLine());
+                            break;
+                        case 2:
+                            System.out.print("> ");
+                            Manual.atualizarAutor(idEd, scanner.nextLine());
+                            break;
+                        case 3:
+                            System.out.print("> ");
+                            Manual.atualizarTexto(idEd, scanner.nextLine());
+                            break;
+                        case 4:
+                            System.out.print("> ");
+                            Manual.atualizarData(idEd, java.sql.Date.valueOf(scanner.nextLine()));
+                            break;
+                        case 5:
+                            traduzir("chose-the-type-of-manual");
+                            for (int i = 0; i < tiposEd.length; i++) {
+                                System.out.printf("%d) %s%n", i + 1, tiposEd[i].getDescricao());
+                            }
+                            System.out.print("> ");
+                            int nt = scanner.nextInt();
+                            scanner.nextLine();
+                            if (nt >= 1 && nt <= tiposEd.length) {
+                                Manual.atualizarTipo(idEd, tiposEd[nt - 1]);
+                            }
+                            break;
+                        default:
+                            traduzir("invalid-option");
+                    }
+                    traduzir("manual-updated-successfully");
                     break;
+
                 case 5:
-                    traduzir("closing-the-program");
+                    traduzir("program-closed");
+                    System.out.println("Programa encerrado.");
+                    return;
 
-                    break;
                 default:
-                    traduzir("invalid-optin-try-again");
-                    break;
+                    System.out.println("Opção inválida, tente novamente.");
             }
-
         }
     }
 
-    private static String obterMensagemTraduzida(String chaveParaTraduzir) {
-        String mensagem = chaveParaTraduzir;
-        try {
-            mensagem = mensagensNoIdiomaEscolhido.getString(chaveParaTraduzir);
-        } catch (Exception e) {
-            mensagem = chaveParaTraduzir;
-        }
-        return mensagem;
+    private static void traduzir(String chave) {
+        String mensagem = mensagensNoIdiomaEscolhido.optString(chave, chave);
+        System.out.println(mensagem);
     }
-
-    private static void traduzir(String chaveParaTraduzir) {
-        System.out.println(obterMensagemTraduzida(chaveParaTraduzir));
-
-    }
-
 }
