@@ -2,9 +2,9 @@
     "Messages": {
         "welcome": "Bem-vindo ao WegOne",
         "chose-an-option": "Escolha uma opção",
-        "insert-an-new-manual": "1- Inserir um novo manual",
-        "view-manuals": "2- Ver manuais existentes",
-        "delete-an-manual": "3- Apagar um manual existente",
+        "insert-an-new-manual": "1 - Inserir um novo manual",
+        "view-manuals": "2 - Ver manuais existentes",
+        "delete-an-manual": "3 - Apagar um manual existente",
         "edit-an-existence-manual": "4 - Editar um manual existente",
         "close-program": "5 - Encerrar o programa",
         "chose-the-type-of-manual": "Escolha o tipo de manual:",
