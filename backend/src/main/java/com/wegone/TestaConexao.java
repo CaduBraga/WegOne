@@ -2,7 +2,6 @@ package com.wegone;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import org.json.JSONObject;
 
 public class TestaConexao {

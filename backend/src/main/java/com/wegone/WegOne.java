@@ -14,17 +14,17 @@ public class WegOne {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Escolha um idioma para tradução / Choose a language / Elija un idioma / Sprache wählen / Choisissez une langue :");
+        System.out.println(
+                "Escolha um idioma para tradução / Choose a language / Elija un idioma / Sprache wählen / Choisissez une langue :");
         System.out.println("1. Português");
         System.out.println("2. English");
         System.out.println("3. Español");
         System.out.println("4. Deutsch");
         System.out.println("5. Français");
-        
+
         System.out.print("Digite o número / Enter number / Ingrese número / Nummer eingeben / Entrez le numéro: ");
         int opcao = scanner.nextInt();
         scanner.nextLine();
-        
 
         String codigoIdioma;
         switch (opcao) {
@@ -81,7 +81,7 @@ public class WegOne {
                     novoManual.cadastrar();
                     break;
 
-                    case 2:
+                case 2:
                     traduzir("select-the-type-of-the-manual");
                     traduzir("operational-conduct-manual");
                     traduzir("diagnostic-manual");
@@ -97,12 +97,12 @@ public class WegOne {
                         break;
                     }
                     TipoManual tipoParaView = tiposView[tipoIdxView - 1];
-                
+
                     Manual[] todosParaView = Manual.buscarManuaisDoBanco();
                     Manual[] filtradosView = Arrays.stream(todosParaView)
-                            .filter(m -> m.getTipo() == tipoParaView)
+                            .filter(m -> m != null && m.getTipo() == tipoParaView)
                             .toArray(Manual[]::new);
-                
+
                     if (filtradosView.length == 0) {
                         traduzir("no-manual-found-of--type");
                     } else {
@@ -122,7 +122,7 @@ public class WegOne {
                     }
                     break;
 
-                    case 3:
+                case 3:
                     traduzir("choose-the-type-of-manual-to-delete");
                     TipoManual[] tiposDel = TipoManual.values();
                     for (int i = 0; i < tiposDel.length; i++) {
@@ -139,7 +139,7 @@ public class WegOne {
 
                     Manual[] todosParaDel = Manual.buscarManuaisDoBanco();
                     Manual[] filtradosDel = Arrays.stream(todosParaDel)
-                            .filter(m -> m.getTipo() == tipoParaDel)
+                            .filter(m -> m != null && m.getTipo() == tipoParaDel)
                             .toArray(Manual[]::new);
 
                     if (filtradosDel.length == 0) {
@@ -165,16 +165,15 @@ public class WegOne {
                     System.out.println("ID: " + idExcluido);
                     break;
 
-
                 case 4:
-                    
-                traduzir("select-the-type-of-the-manual");
-                traduzir("operational-conduct-manual");
-                traduzir("diagnostic-manual");
-                traduzir("manutance-manual");
-                traduzir("operation-manual");
-                traduzir("security-manual");
-                System.out.print("> ");
+
+                    traduzir("select-the-type-of-the-manual");
+                    traduzir("operational-conduct-manual");
+                    traduzir("diagnostic-manual");
+                    traduzir("manutance-manual");
+                    traduzir("operation-manual");
+                    traduzir("security-manual");
+                    System.out.print("> ");
 
                     TipoManual[] tiposEd = TipoManual.values();
                     int tipoIdxEd = scanner.nextInt();
@@ -187,7 +186,7 @@ public class WegOne {
 
                     Manual[] todosParaEd = Manual.buscarManuaisDoBanco();
                     Manual[] filtradosEd = Arrays.stream(todosParaEd)
-                            .filter(m -> m.getTipo() == tipoParaEd)
+                            .filter(m -> m != null && m.getTipo() == tipoParaEd)
                             .toArray(Manual[]::new);
 
                     if (filtradosEd.length == 0) {
@@ -220,17 +219,17 @@ public class WegOne {
                     scanner.nextLine();
                     switch (field) {
                         case 1:
-                        traduzir("digit-new-title");
-                        System.out.print("> ");
+                            traduzir("digit-new-title");
+                            System.out.print("> ");
                             Manual.atualizarTitulo(idEd, scanner.nextLine());
                             break;
                         case 2:
-                        traduzir("digit-new-author");
+                            traduzir("digit-new-author");
                             System.out.print("> ");
                             Manual.atualizarAutor(idEd, scanner.nextLine());
                             break;
                         case 3:
-                        traduzir("digit-new-text");
+                            traduzir("digit-new-text");
                             System.out.print("> ");
                             Manual.atualizarTexto(idEd, scanner.nextLine());
                             break;
@@ -256,24 +255,21 @@ public class WegOne {
 
                 case 5:
 
-                traduzir("program-closing");
-                try {
-                    //Delay para dar mais "veracidade" pro código, com essa firulinha de atraso
-                    Thread.sleep(1500); //1,5 segundos
-                } catch (InterruptedException e) {
-                    e.printStackTrace(); // Em caso de interrupção da thread, exibe o erro
-                }
-                
-                traduzir("program-closed");
+                    traduzir("program-closing");
+                    try {
+                        // Delay para dar mais "veracidade" pro código, com essa firulinha de atraso
+                        Thread.sleep(1500); // 1,5 segundos
+                    } catch (InterruptedException e) {
+                        e.printStackTrace(); // Em caso de interrupção da thread, exibe o erro
+                    }
+
+                    traduzir("program-closed");
                     return;
 
                 default:
                     traduzir("invalid-option-try-again");
             }
         }
-    }
-
-    private static void ThreadSleep(int i) {
     }
 
     private static void traduzir(String chave) {

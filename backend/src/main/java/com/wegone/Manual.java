@@ -1,8 +1,10 @@
 package com.wegone;
-import java.sql.*;
-import java.util.Date;
-import java.util.Scanner;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 import org.json.JSONObject;
 
 public class Manual {
@@ -25,14 +27,12 @@ public class Manual {
     }
 
     public Manual() {
-        // campos inicializados com valores padrão
+        // campos inicializados com valores padrão (nulos/zerados)
     }
 
-    public static void carregarIdioma(JSONObject root) {      
-        mensagensNoIdiomaEscolhido = root.getJSONObject("Messages");
-        //método para evitar erros ao puxar o idioma
+    public static void carregarIdioma(JSONObject root) {
+        mensagensNoIdiomaEscolhido = root.getJSONObject("Messages"); // método para evitar erros ao puxar o idioma
     }
-
 
     public int getIdManual() {
         return idManual;
@@ -94,21 +94,22 @@ public class Manual {
 
     public void cadastrar() {
         Scanner scanner = new Scanner(System.in);
-    
+
         traduzir("type-the-title-of-the-manual");
         System.out.print("> ");
         setTitulo(scanner.nextLine());
-    
+
         traduzir("type-the-author-of-the-manual");
         System.out.print("> ");
         setAutor(scanner.nextLine());
-    
+
         traduzir("type-the-text-of-the-manual");
         System.out.print("> ");
         setTexto(scanner.nextLine());
-    
+
         TipoManual[] tipos = TipoManual.values();
         TipoManual escolhaTipo = null;
+
         do {
             traduzir("select-the-type-of-the-manual");
             traduzir("operational-conduct-manual");
@@ -126,93 +127,80 @@ public class Manual {
             }
         } while (escolhaTipo == null);
         setTipo(escolhaTipo);
-    
+
         Date agora = new Date();
         setDataDePublicacao(agora);
-    
+
         String sql = "INSERT INTO manuais (titulo, autor, texto, dataDePublicacao, tipoManual) VALUES (?,?,?,?,?)";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-    
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             stmt.setString(1, getTitulo());
             stmt.setString(2, getAutor());
             stmt.setString(3, getTexto());
             stmt.setDate(4, new java.sql.Date(agora.getTime()));
             stmt.setString(5, getTipo().getDescricao());
             stmt.executeUpdate();
-    
+
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     setIdManual(rs.getInt(1));
                 }
             }
-    
+
             traduzir("manual-saved-successfully");
             System.out.println("ID: " + getIdManual());
-    
+
         } catch (SQLException e) {
             traduzir("error-saving-to-database");
             System.out.println(e.getMessage());
         }
     }
-    
 
     public static Manual[] buscarManuaisDoBanco() {
-        String sqlCount = "SELECT COUNT(*) FROM manuais";
-        int total = 0;
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmtCount = conn.prepareStatement(sqlCount);
-             ResultSet rsCount = stmtCount.executeQuery()) {
-            if (rsCount.next()) {
-                total = rsCount.getInt(1);
-            }
-        } catch (SQLException e) {
-            traduzir("error-to-count-manuals");
-            System.out.println(e.getMessage());
-            return new Manual[0];
-        }
-
-        Manual[] manuais = new Manual[total];
+        List<Manual> lista = new ArrayList<>();
         String sql = "SELECT id_manual, titulo, autor, texto, dataDePublicacao, tipoManual FROM manuais";
+
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
-            int i = 0;
             while (rs.next()) {
-                int id = rs.getInt("id_manual");
-                String titulo = rs.getString("titulo");
-                String autor = rs.getString("autor");
-                String texto = rs.getString("texto");
-                Date data = rs.getDate("dataDePublicacao");
-                TipoManual tipo = TipoManual.fromDescricao(rs.getString("tipoManual"));
+                Manual m = new Manual();
+                m.setIdManual(rs.getInt("id_manual"));
+                m.setTitulo(rs.getString("titulo"));
+                m.setAutor(rs.getString("autor"));
+                m.setTexto(rs.getString("texto"));
+                m.setDataDePublicacao(rs.getDate("dataDePublicacao"));
 
-                manuais[i++] = new Manual(id, titulo, data, autor, texto, tipo);
+                // Aqui o nome correto da coluna é tipoManual, não "tipo"
+                String tipoDescricao = rs.getString("tipoManual");
+                m.setTipo(TipoManual.fromDescricao(tipoDescricao));
+
+                lista.add(m);
             }
         } catch (SQLException e) {
-            traduzir("error-to-search-manuals");
-            System.out.println(e.getMessage());
-            return new Manual[0];
+            e.printStackTrace();
         }
-        return manuais;
+
+        return lista.toArray(new Manual[0]);
     }
 
     public static Manual buscarManualPorId(int id) {
         String sql = "SELECT * FROM manuais WHERE id_manual = ?";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return new Manual(
-                        id,
-                        rs.getString("titulo"),
-                        rs.getDate("dataDePublicacao"),
-                        rs.getString("autor"),
-                        rs.getString("texto"),
-                        TipoManual.fromDescricao(rs.getString("tipoManual"))
-                    );
+                            id,
+                            rs.getString("titulo"),
+                            rs.getDate("dataDePublicacao"),
+                            rs.getString("autor"),
+                            rs.getString("texto"),
+                            TipoManual.fromDescricao(rs.getString("tipoManual")));
                 }
             }
         } catch (SQLException e) {
@@ -225,7 +213,7 @@ public class Manual {
     public static void excluirPorId(int id) {
         String sql = "DELETE FROM manuais WHERE id_manual = ?";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -237,7 +225,7 @@ public class Manual {
     public static void atualizarTitulo(int id, String novoTitulo) {
         String sql = "UPDATE manuais SET titulo = ? WHERE id_manual = ?";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, novoTitulo);
             stmt.setInt(2, id);
             stmt.executeUpdate();
@@ -251,7 +239,7 @@ public class Manual {
     public static void atualizarAutor(int id, String novoAutor) {
         String sql = "UPDATE manuais SET autor = ? WHERE id_manual = ?";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, novoAutor);
             stmt.setInt(2, id);
             stmt.executeUpdate();
@@ -265,7 +253,7 @@ public class Manual {
     public static void atualizarTexto(int id, String novoTexto) {
         String sql = "UPDATE manuais SET texto = ? WHERE id_manual = ?";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, novoTexto);
             stmt.setInt(2, id);
             stmt.executeUpdate();
@@ -279,7 +267,7 @@ public class Manual {
     public static void atualizarData(int id, Date novaData) {
         String sql = "UPDATE manuais SET dataDePublicacao = ? WHERE id_manual = ?";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setDate(1, new java.sql.Date(novaData.getTime()));
             stmt.setInt(2, id);
             stmt.executeUpdate();
@@ -293,7 +281,7 @@ public class Manual {
     public static void atualizarTipo(int id, TipoManual novoTipo) {
         String sql = "UPDATE manuais SET tipoManual = ? WHERE id_manual = ?";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, novoTipo.getDescricao());
             stmt.setInt(2, id);
             stmt.executeUpdate();
