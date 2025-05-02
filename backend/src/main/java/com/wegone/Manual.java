@@ -114,7 +114,7 @@ public class Manual {
             traduzir("select-the-type-of-the-manual");
             traduzir("operational-conduct-manual");
             traduzir("diagnostic-manual");
-            traduzir("manutance-manual");
+            traduzir("maintenance-manual");
             traduzir("operation-manual");
             traduzir("security-manual");
             System.out.print("> ");

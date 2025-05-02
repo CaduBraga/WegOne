@@ -1,6 +1,7 @@
 package com.wegone;
 
 public enum TipoManual {
+
     MANUAL_DE_CONDUTA_OPERACIONAL("Manual de conduta operacional"),
     MANUAL_DE_DIAGNOSTICOS("Manual de diagnósticos"),
     MANUAL_DE_MANTENCAO("Manual de manutenção"),
@@ -23,6 +24,8 @@ public enum TipoManual {
                 return t;
             }
         }
-        throw new IllegalArgumentException("Descrição inválida: " + descricao);
+        // é necessário fazer isso pq na classe do tipe enum, não aceita o traduzir();
+        System.out.println(Translator.t("invalid-description"));
+        throw new IllegalArgumentException(descricao);
     }
 }

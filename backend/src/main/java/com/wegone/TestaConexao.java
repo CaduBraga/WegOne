@@ -9,7 +9,9 @@ public class TestaConexao {
 
     public static void main(String[] args) {
         try (Connection conn = Conexao.conectar()) {
-            traduzir("connection-successfully");
+            if (conn != null && !conn.isClosed()) {
+                traduzir("connection-successful");
+            }
         } catch (SQLException e) {
             traduzir("connection-error");
             System.out.println(e.getMessage());
