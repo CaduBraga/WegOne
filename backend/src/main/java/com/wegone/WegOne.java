@@ -273,10 +273,13 @@ public class WegOne {
                                 break;
                             case 5:
                                 traduzir("select-the-type-of-the-manual");
-                                for (int i = 0; i < tiposEd.length; i++) {
-                                    System.out.printf("%d) %s%n", i + 1, tiposEd[i].getDescricao());
-                                }
+                                traduzir("operational-conduct-manual");
+                                traduzir("diagnostic-manual");
+                                traduzir("maintenance-manual");
+                                traduzir("operation-manual");
+                                traduzir("security-manual");
                                 System.out.print("> ");
+
                                 int nt = scanner.nextInt();
                                 scanner.nextLine();
                                 if (nt >= 1 && nt <= tiposEd.length) {
