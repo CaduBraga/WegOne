@@ -15,46 +15,19 @@ public class WegOne {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(
-                "Escolha um idioma para tradução / Choose a language / Elija un idioma / Sprache wählen / Choisissez une langue :");
-        System.out.println("1. Português");
-        System.out.println("2. English");
-        System.out.println("3. Español");
-        System.out.println("4. Deutsch");
-        System.out.println("5. Français");
+        String idiomaEscolhido = IdiomaHelper.escolherIdioma(scanner);
 
-        System.out.print("Digite o número / Enter number / Ingrese número / Nummer eingeben / Entrez le numéro: ");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
-
-        String codigoIdioma;
-        switch (opcao) {
-            case 1:
-                codigoIdioma = "pt";
-                break;
-            case 2:
-                codigoIdioma = "en";
-                break;
-            case 3:
-                codigoIdioma = "es";
-                break;
-            case 4:
-                codigoIdioma = "de";
-                break;
-            case 5:
-                codigoIdioma = "fr";
-                break;
-            default:
-                System.out.println(
-                        "Idioma inválido / Invalid language / Idioma inválido / Ungültige Sprache / Langue invalide.");
-                return;
+        if (idiomaEscolhido != null) {
+            System.out.println("Idioma selecionado: " + idiomaEscolhido);
+        } else {
+            System.out.println("Nenhum idioma selecionado.");
         }
 
         InputStream inputStream = WegOne.class.getClassLoader()
-                .getResourceAsStream("translate/" + codigoIdioma + ".json");
+                .getResourceAsStream("translate/" + idiomaEscolhido + ".json");
 
         if (inputStream == null) {
-            System.out.println("Arquivo não encontrado: translate/" + codigoIdioma + ".json");
+            System.out.println("Arquivo não encontrado: translate/" + idiomaEscolhido + ".json");
             return;
         }
 
@@ -86,19 +59,7 @@ public class WegOne {
         userRole = UsuarioDAO.obterPapelDoUsuario(usuario, senha);
 
         while (true) {
-            traduzir("choose-an-option");
-            if (!userRole.equals("viewer"))
-                traduzir("insert-a-new-manual");
-            traduzir("view-manuals");
-            if (userRole.equals("adm"))
-                traduzir("delete-a-manual");
-            if (!userRole.equals("viewer"))
-                traduzir("edit-an-existing-manual");
-            traduzir("close-program");
-            System.out.print("> ");
-
-            int escolha = scanner.nextInt();
-            scanner.nextLine();
+            int escolha = IdiomaHelper.exibirMenuInicial(userRole, scanner);
 
             switch (escolha) {
                 case 1:
