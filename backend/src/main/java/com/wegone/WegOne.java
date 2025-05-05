@@ -3,30 +3,31 @@ package com.wegone;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.Scanner;
-
 import org.json.JSONObject;
 
 public class WegOne {
 
-    static JSONObject mensagensNoIdiomaEscolhido;
+    private static JSONObject mensagensNoIdiomaEscolhido;
+    private static String userRole;
 
     public static void main(String[] args) throws IOException {
-
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Escolha um idioma para tradução:");
+        System.out.println(
+                "Escolha um idioma para tradução / Choose a language / Elija un idioma / Sprache wählen / Choisissez une langue :");
         System.out.println("1. Português");
         System.out.println("2. English");
         System.out.println("3. Español");
-        System.out.println("4. Deutch");
+        System.out.println("4. Deutsch");
+        System.out.println("5. Français");
 
-        System.out.print("Digite o número do idioma: ");
+        System.out.print("Digite o número / Enter number / Ingrese número / Nummer eingeben / Entrez le numéro: ");
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
-        String codigoIdioma = "";
+        String codigoIdioma;
         switch (opcao) {
             case 1:
                 codigoIdioma = "pt";
@@ -40,8 +41,12 @@ public class WegOne {
             case 4:
                 codigoIdioma = "de";
                 break;
+            case 5:
+                codigoIdioma = "fr";
+                break;
             default:
-                System.out.println("Idioma inválido.");
+                System.out.println(
+                        "Idioma inválido / Invalid language / Idioma inválido / Ungültige Sprache / Langue invalide.");
                 return;
         }
 
@@ -50,543 +55,267 @@ public class WegOne {
 
         if (inputStream == null) {
             System.out.println("Arquivo não encontrado: translate/" + codigoIdioma + ".json");
+            return;
         }
 
         String conteudo = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-
-        mensagensNoIdiomaEscolhido = new JSONObject(conteudo).getJSONObject("Messages");
+        JSONObject root = new JSONObject(conteudo);
+        mensagensNoIdiomaEscolhido = root.getJSONObject("Messages");
+        Manual.carregarIdioma(root);
 
         traduzir("welcome");
 
+        traduzir("enter-your-username");
+        System.out.print("> ");
+        String usuario = scanner.nextLine();
 
+        if (!UsuarioDAO.usuarioExiste(usuario)) {
+            traduzir("invalid-username");
+            return;
+        }
 
-        ManualDeManutencao[] manuaisManutencao = Manuais.imprimirManualDeManutencao();
-        ManualDeOperacao[] manuaisOperacao = Manuais.imprimirManualDeOperacao();
-        ManualDeSeguranca[] manuaisSeguranca = Manuais.imprimirManualDeSeguranca();
-        ManualDeCondutaOperacional[] manuaisConduta = Manuais.imprimirManualDeCondutaOperacional();
-        ManualDeDiagnostico[] manuaisDiagnostico = Manuais.imprimirManualDeDiagnostico();
+        traduzir("enter-your-password");
+        System.out.print("> ");
+        String senha = scanner.nextLine();
 
-        int totalManuaisManutencao = manuaisManutencao.length;
-        int totalManuaisOperacao = manuaisOperacao.length;
-        int totalManuaisSeguranca = manuaisSeguranca.length;
-        int totalManuaisConduta = manuaisConduta.length;
-        int totalManuaisDiagnostico = manuaisDiagnostico.length;
+        if (!UsuarioDAO.validarSenha(usuario, senha)) {
+            traduzir("invalid-password");
+            return;
+        }
+
+        userRole = UsuarioDAO.obterPapelDoUsuario(usuario, senha);
 
         while (true) {
-            traduzir("chose-an-option");
-            traduzir("insert-an-new-manual");
+            traduzir("choose-an-option");
+            if (!userRole.equals("viewer"))
+                traduzir("insert-a-new-manual");
             traduzir("view-manuals");
-            traduzir("delete-an-manual");
-            traduzir("edit-an-existence-manual");
+            if (userRole.equals("adm"))
+                traduzir("delete-a-manual");
+            if (!userRole.equals("viewer"))
+                traduzir("edit-an-existing-manual");
             traduzir("close-program");
+            System.out.print("> ");
 
             int escolha = scanner.nextInt();
             scanner.nextLine();
 
-            if (escolha == 1) {
-                traduzir("chose-the-type-of-manual");
-                traduzir("manutencion-manual");
-                traduzir("operation-manual");
-                traduzir("security-manual");
-                traduzir("conduct-manual");
-                traduzir("diagnostic-manual");
+            switch (escolha) {
+                case 1:
+                    if (!userRole.equals("viewer")) {
+                        Manual novoManual = new Manual();
+                        novoManual.cadastrar();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
+                    break;
 
-                int tipoManual = scanner.nextInt();
-                scanner.nextLine();
-
-                switch (tipoManual) {
-                    case 1:
-                        if (totalManuaisManutencao == manuaisManutencao.length) {
-                            /*
-                             * sempre que acabar o espaço do array ele vai criar um novo, duplicar o espaço
-                             * e copiar os arquivos nele novamente
-                             */
-                            ManualDeManutencao[] novoArray = new ManualDeManutencao[manuaisManutencao.length * 2];
-                            System.arraycopy(manuaisManutencao, 0, novoArray, 0, manuaisManutencao.length);
-                            manuaisManutencao = novoArray;
-                        }
-                        ManualDeManutencao novoManual = new ManualDeManutencao("", new Date(), "", "");
-                        novoManual.preencherDados();
-                        manuaisManutencao[totalManuaisManutencao] = novoManual;
-                        totalManuaisManutencao++;
-                        traduzir("new-manual-sucessfully-inserted");
-                        break;
-                    case 2:
-                        if (totalManuaisOperacao == manuaisOperacao.length) {
-                            ManualDeOperacao[] novoArray = new ManualDeOperacao[manuaisOperacao.length * 2];
-                            System.arraycopy(manuaisOperacao, 0, novoArray, 0, manuaisOperacao.length);
-                            manuaisOperacao = novoArray;
-                        }
-                        ManualDeOperacao novoManualOperacao = new ManualDeOperacao("", new Date(), "", "");
-                        novoManualOperacao.preencherDados();
-                        manuaisOperacao[totalManuaisOperacao] = novoManualOperacao;
-                        totalManuaisOperacao++;
-                        traduzir("new-manual-sucessfully-inserted");
-                        break;
-                    case 3:
-                        if (totalManuaisSeguranca == manuaisSeguranca.length) {
-                            ManualDeSeguranca[] novoArray = new ManualDeSeguranca[manuaisSeguranca.length * 2];
-                            System.arraycopy(manuaisSeguranca, 0, novoArray, 0, manuaisSeguranca.length);
-                            manuaisSeguranca = novoArray;
-                        }
-                        ManualDeSeguranca novoManualSeguranca = new ManualDeSeguranca("", new Date(), "", "");
-                        novoManualSeguranca.preencherDados();
-                        manuaisSeguranca[totalManuaisSeguranca] = novoManualSeguranca;
-                        totalManuaisSeguranca++;
-                        traduzir("new-manual-sucessfully-inserted");
-                        break;
-                    case 4:
-                        if (totalManuaisConduta == manuaisConduta.length) {
-                            ManualDeCondutaOperacional[] novoArray = new ManualDeCondutaOperacional[manuaisConduta.length
-                                    * 2];
-                            System.arraycopy(manuaisConduta, 0, novoArray, 0, manuaisConduta.length);
-                            manuaisConduta = novoArray;
-                        }
-                        ManualDeCondutaOperacional novoManualConduta = new ManualDeCondutaOperacional("", new Date(),
-                                "", "");
-                        novoManualConduta.preencherDados();
-                        manuaisConduta[totalManuaisConduta] = novoManualConduta;
-                        totalManuaisConduta++;
-                        traduzir("new-manual-sucessfully-inserted");
-                        break;
-                    case 5:
-                        if (totalManuaisDiagnostico == manuaisDiagnostico.length) {
-                            ManualDeDiagnostico[] novoArray = new ManualDeDiagnostico[manuaisDiagnostico.length * 2];
-                            System.arraycopy(manuaisDiagnostico, 0, novoArray, 0, manuaisDiagnostico.length);
-                            manuaisDiagnostico = novoArray;
-                        }
-                        ManualDeDiagnostico novoManualDiagnostico = new ManualDeDiagnostico("", new Date(), "", "");
-                        novoManualDiagnostico.preencherDados();
-                        manuaisDiagnostico[totalManuaisDiagnostico] = novoManualDiagnostico;
-                        totalManuaisDiagnostico++;
-                        traduzir("new-manual-sucessfully-inserted");
-                        break;
-                    default:
+                case 2:
+                    traduzir("select-the-type-of-the-manual");
+                    traduzir("operational-conduct-manual");
+                    traduzir("diagnostic-manual");
+                    traduzir("maintenance-manual");
+                    traduzir("operation-manual");
+                    traduzir("security-manual");
+                    System.out.print("> ");
+                    TipoManual[] tiposView = TipoManual.values();
+                    int tipoIdxView = scanner.nextInt();
+                    scanner.nextLine();
+                    if (tipoIdxView < 1 || tipoIdxView > tiposView.length) {
                         traduzir("invalid-option");
-                }
+                        break;
+                    }
+                    TipoManual tipoParaView = tiposView[tipoIdxView - 1];
 
-            } else if (escolha == 2) {
-                traduzir("chose-the-type-of-manual-to-view");
-                traduzir("manutencion-manual");
-                traduzir("operation-manual");
-                traduzir("security-manual");
-                traduzir("conduct-manual");
-                traduzir("diagnostic-manual");
+                    Manual[] todosParaView = Manual.buscarManuaisDoBanco();
+                    Manual[] filtradosView = Arrays.stream(todosParaView)
+                            .filter(m -> m != null && m.getTipo() == tipoParaView)
+                            .toArray(Manual[]::new);
 
-                int tipoVisualizacao = scanner.nextInt();
-                scanner.nextLine();
-
-                switch (tipoVisualizacao) {
-                    case 1:
-                        traduzir("manutencion-manuals-existing");
-                        for (int i = 0; i < totalManuaisManutencao; i++) {
-                            System.out.println((i + 1) + " - " + manuaisManutencao[i].getTitulo());
+                    if (filtradosView.length == 0) {
+                        traduzir("no-manual-found-of-type");
+                    } else {
+                        traduzir("registred-manuals");
+                        for (int i = 0; i < filtradosView.length; i++) {
+                            System.out.printf("%d - %s%n", i + 1, filtradosView[i].getTitulo());
                         }
-                        break;
-                    case 2:
-                        traduzir("operation-manuals-existing");
-                        for (int i = 0; i < totalManuaisOperacao; i++) {
-                            System.out.println((i + 1) + " - " + manuaisOperacao[i].getTitulo());
-                        }
-                        break;
-                    case 3:
-                        traduzir("security-manuals-existing");
-                        for (int i = 0; i < totalManuaisSeguranca; i++) {
-                            System.out.println((i + 1) + " - " + manuaisSeguranca[i].getTitulo());
-                        }
-                        break;
-                    case 4:
-                        traduzir("operacional-conduct-existing");
-                        for (int i = 0; i < totalManuaisConduta; i++) {
-                            System.out.println((i + 1) + " - " + manuaisConduta[i].getTitulo());
-                        }
-                        break;
-                    case 5:
-                        traduzir("diagnostic-manuals-existing");
-                        for (int i = 0; i < totalManuaisDiagnostico; i++) {
-                            System.out.println((i + 1) + " - " + manuaisDiagnostico[i].getTitulo());
-                        }
-                        break;
-                    default:
-                        traduzir("invalid-option");
-                        continue;
-                }
-
-                traduzir("select-a-manual-to-see-more-details");
-                int escolhaManual = scanner.nextInt();
-                scanner.nextLine();
-
-                switch (tipoVisualizacao) {
-                    case 1:
-                        if (escolhaManual <= totalManuaisManutencao) {
-                            manuaisManutencao[escolhaManual - 1].exibirManual(); 
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                    case 2:
-                        if (escolhaManual <= totalManuaisOperacao) {
-                            manuaisOperacao[escolhaManual - 1].exibirManual();
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                    case 3:
-                        if (escolhaManual <= totalManuaisSeguranca) {
-                            manuaisSeguranca[escolhaManual - 1].exibirManual();
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                    case 4:
-                        if (escolhaManual <= totalManuaisConduta) {
-                            manuaisConduta[escolhaManual - 1].exibirManual();
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                    case 5:
-                        if (escolhaManual <= totalManuaisDiagnostico) {
-                            manuaisDiagnostico[escolhaManual - 1].exibirManual(); 
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                }
-
-            } else if (escolha == 3) {
-                traduzir("chose-the-type-of-manual-to-delete");
-                traduzir("manutencion-manual");
-                traduzir("operation-manual");
-                traduzir("security-manual");
-                traduzir("conduct-manual");
-                traduzir("diagnostic-manual");
-
-                int tipoApagar = scanner.nextInt();
-                scanner.nextLine();
-
-                switch (tipoApagar) {
-                    case 1:
-                        traduzir("chose-the-number-of-the-manual-to-delete");
-                        for (int i = 0; i < totalManuaisManutencao; i++) {
-                            System.out.println((i + 1) + " - " + manuaisManutencao[i].getTitulo());
-                        }
-                        int apagarManutencao = scanner.nextInt();
+                        traduzir("select-a-manual-to-see-more-details");
+                        System.out.print("> ");
+                        int idx = scanner.nextInt();
                         scanner.nextLine();
-                        if (apagarManutencao >= 1 && apagarManutencao <= totalManuaisManutencao) {
-                            for (int i = apagarManutencao - 1; i < totalManuaisManutencao - 1; i++) {
-                                manuaisManutencao[i] = manuaisManutencao[i + 1];
-                            }
-                            manuaisManutencao[totalManuaisManutencao - 1] = null;
-                            totalManuaisManutencao--;
-                            traduzir("manual-deletede-sucessefully");
+                        if (idx >= 1 && idx <= filtradosView.length) {
+                            filtradosView[idx - 1].imprimir();
                         } else {
                             traduzir("invalid-option");
                         }
-                        break;
-                    case 2:
-                        traduzir("chose-the-number-of-the-manual-to-delete");
-                        for (int i = 0; i < totalManuaisOperacao; i++) {
-                            System.out.println((i + 1) + " - " + manuaisOperacao[i].getTitulo());
-                        }
-                        int apagarOperacao = scanner.nextInt();
-                        scanner.nextLine();
-                        if (apagarOperacao >= 1 && apagarOperacao <= totalManuaisOperacao) {
-                            for (int i = apagarOperacao - 1; i < totalManuaisOperacao - 1; i++) {
-                                manuaisOperacao[i] = manuaisOperacao[i + 1];
-                            }
-                            manuaisOperacao[totalManuaisOperacao - 1] = null;
-                            totalManuaisOperacao--;
-                            traduzir("manual-deletede-sucessefully");
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                    case 3:
-                        traduzir("chose-the-number-of-the-manual-to-delete");
-                        for (int i = 0; i < totalManuaisSeguranca; i++) {
-                            System.out.println((i + 1) + " - " + manuaisSeguranca[i].getTitulo());
-                        }
-                        int apagarSeguranca = scanner.nextInt();
-                        scanner.nextLine();
-                        if (apagarSeguranca >= 1 && apagarSeguranca <= totalManuaisSeguranca) {
-                            for (int i = apagarSeguranca - 1; i < totalManuaisSeguranca - 1; i++) {
-                                manuaisSeguranca[i] = manuaisSeguranca[i + 1];
-                            }
-                            manuaisSeguranca[totalManuaisSeguranca - 1] = null;
-                            totalManuaisSeguranca--;
-                            traduzir("manual-deletede-sucessefully");
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                    case 4:
-                        traduzir("chose-the-number-of-the-manual-to-delete");
-                        for (int i = 0; i < totalManuaisConduta; i++) {
-                            System.out.println((i + 1) + " - " + manuaisConduta[i].getTitulo());
-                        }
-                        int apagarConduta = scanner.nextInt();
-                        scanner.nextLine();
-                        if (apagarConduta >= 1 && apagarConduta <= totalManuaisConduta) {
-                            for (int i = apagarConduta - 1; i < totalManuaisConduta - 1; i++) {
-                                manuaisConduta[i] = manuaisConduta[i + 1];
-                            }
-                            manuaisConduta[totalManuaisConduta - 1] = null;
-                            totalManuaisConduta--;
-                            traduzir("manual-deletede-sucessefully");
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                    case 5:
-                        traduzir("chose-the-number-of-the-manual-to-delete");
-                        for (int i = 0; i < totalManuaisDiagnostico; i++) {
-                            System.out.println((i + 1) + " - " + manuaisDiagnostico[i].getTitulo());
-                        }
-                        int apagarDiagnostico = scanner.nextInt();
-                        scanner.nextLine();
-                        if (apagarDiagnostico >= 1 && apagarDiagnostico <= totalManuaisDiagnostico) {
-                            for (int i = apagarDiagnostico - 1; i < totalManuaisDiagnostico - 1; i++) {
-                                manuaisDiagnostico[i] = manuaisDiagnostico[i + 1];
-                            }
-                            manuaisDiagnostico[totalManuaisDiagnostico - 1] = null;
-                            totalManuaisDiagnostico--;
-                            traduzir("manual-deletede-sucessefully");
-                        } else {
-                            traduzir("invalid-option");
-                        }
-                        break;
-                    default:
-                        traduzir("invalid-option");
-                }
+                    }
+                    break;
 
-            } else if (escolha == 4) {
-                traduzir("chose-the-type-of-manual-to-edit");
-                traduzir("manutencion-manual");
-                traduzir("operation-manual");
-                traduzir("security-manual");
-                traduzir("conduct-manual");
-                traduzir("diagnostic-manual");
-
-                int tipoEditar = scanner.nextInt();
-                scanner.nextLine();
-
-                switch (tipoEditar) {
-                    case 1:
-                        traduzir("chose-the-type-of-manual-to-edit");
-                        for (int i = 0; i < totalManuaisManutencao; i++) {
-                            System.out.println((i + 1) + " - " + manuaisManutencao[i].getTitulo());
+                case 3:
+                    if (userRole.equals("adm")) {
+                        traduzir("choose-the-type-of-manual-to-delete");
+                        TipoManual[] tiposDel = TipoManual.values();
+                        for (int i = 0; i < tiposDel.length; i++) {
+                            System.out.printf("%d) %s%n", i + 1, tiposDel[i].getDescricao());
                         }
-                        int editarManutencao = scanner.nextInt();
+                        System.out.print("> ");
+                        int tipoIdxDel = scanner.nextInt();
                         scanner.nextLine();
-                        if (editarManutencao >= 1 && editarManutencao <= totalManuaisManutencao) {
-                            ManualDeManutencao manual = manuaisManutencao[editarManutencao - 1];
-                            traduzir("what-do-you-want-to-edit");
-                            traduzir("manutencion-manual");
-                            traduzir("operation-manual");
-                            traduzir("security-manual");
-                            traduzir("conduct-manual");
-                            traduzir("diagnostic-manual");
-                            int opcaoEdicao = scanner.nextInt();
-                            scanner.nextLine();
-
-                            switch (opcaoEdicao) {
-                                case 1:
-                                    manual.editarTitulo();
-                                    break;
-                                case 2:
-                                    manual.editarAutor();
-                                    break;
-                                case 3:
-                                    manual.editarTexto();
-                                    break;
-                                case 4:
-                                    manual.editarDataPublicacao();
-                                    break;
-                                default:
-                                    traduzir("invalid-option");
-                            }
-                        } else {
+                        if (tipoIdxDel < 1 || tipoIdxDel > tiposDel.length) {
                             traduzir("invalid-option");
+                            break;
                         }
-                        break;
-                    case 2:
-                        traduzir("chose-the-number-to-edit");
-                        for (int i = 0; i < totalManuaisOperacao; i++) {
-                            System.out.println((i + 1) + " - " + manuaisOperacao[i].getTitulo());
+                        TipoManual tipoParaDel = tiposDel[tipoIdxDel - 1];
+
+                        Manual[] todosParaDel = Manual.buscarManuaisDoBanco();
+                        Manual[] filtradosDel = Arrays.stream(todosParaDel)
+                                .filter(m -> m != null && m.getTipo() == tipoParaDel)
+                                .toArray(Manual[]::new);
+
+                        if (filtradosDel.length == 0) {
+                            traduzir("no-manual-found-of-type");
+                            break;
                         }
-                        int editarOperacao = scanner.nextInt();
+
+                        traduzir("manuals-available-to-delete");
+                        for (int i = 0; i < filtradosDel.length; i++) {
+                            System.out.printf("%d) %s%n", i + 1, filtradosDel[i].getTitulo());
+                        }
+                        traduzir("choose-the-number-of-the-manual-to-delete");
+                        System.out.print("> ");
+                        int del = scanner.nextInt();
                         scanner.nextLine();
-                        if (editarOperacao >= 1 && editarOperacao <= totalManuaisOperacao) {
-                            ManualDeOperacao manual = manuaisOperacao[editarOperacao - 1];
-                            traduzir("what-you-want-to-edit");
-                            traduzir("title");
-                            traduzir("author");
-                            traduzir("text");
-                            traduzir("date-of-publication");
-                            int opcaoEdicao = scanner.nextInt();
-                            scanner.nextLine();
-
-                            switch (opcaoEdicao) {
-                                case 1:
-                                    manual.editarTitulo();
-                                    break;
-                                case 2:
-                                    manual.editarAutor();
-                                    break;
-                                case 3:
-                                    manual.editarTexto();
-                                    break;
-                                case 4:
-                                    manual.editarDataPublicacao();
-                                    break;
-                                default:
-                                    traduzir("invalid-option");
-                            }
-                        } else {
+                        if (del < 1 || del > filtradosDel.length) {
                             traduzir("invalid-option");
+                            break;
                         }
-                        break;
-                    case 3:
-                        traduzir("chose-the-number-to-edit");
-                        for (int i = 0; i < totalManuaisSeguranca; i++) {
-                            System.out.println((i + 1) + " - " + manuaisSeguranca[i].getTitulo());
-                        }
-                        int editarSeguranca = scanner.nextInt();
+                        int idExcluido = filtradosDel[del - 1].getIdManual();
+                        Manual.excluirPorId(idExcluido);
+                        traduzir("manual-deleted-successfully");
+                        System.out.println("ID: " + idExcluido);
+
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
+
+                    break;
+
+                case 4:
+                    if (!userRole.equals("viewer")) { // Verifica se o usuário não é um "viewer"
+                        traduzir("select-the-type-of-the-manual");
+                        traduzir("operational-conduct-manual");
+                        traduzir("diagnostic-manual");
+                        traduzir("maintenance-manual");
+                        traduzir("operation-manual");
+                        traduzir("security-manual");
+                        System.out.print("> ");
+
+                        TipoManual[] tiposEd = TipoManual.values();
+                        int tipoIdxEd = scanner.nextInt();
                         scanner.nextLine();
-                        if (editarSeguranca >= 1 && editarSeguranca <= totalManuaisSeguranca) {
-                            ManualDeSeguranca manual = manuaisSeguranca[editarSeguranca - 1];
-                            traduzir("what-you-want-to-edit");
-                            traduzir("title");
-                            traduzir("author");
-                            traduzir("text");
-                            traduzir("date-of-publication");
-                            int opcaoEdicao = scanner.nextInt();
-                            scanner.nextLine();
-
-                            switch (opcaoEdicao) {
-                                case 1:
-                                    manual.editarTitulo();
-                                    break;
-                                case 2:
-                                    manual.editarAutor();
-                                    break;
-                                case 3:
-                                    manual.editarTexto();
-                                    break;
-                                case 4:
-                                    manual.editarDataPublicacao();
-                                    break;
-                                default:
-                                    traduzir("invalid-option");
-                            }
-                        } else {
+                        if (tipoIdxEd < 1 || tipoIdxEd > tiposEd.length) {
                             traduzir("invalid-option");
+                            break;
                         }
-                        break;
-                    case 4:
-                        traduzir("chose-the-number-to-edit");
-                        for (int i = 0; i < totalManuaisConduta; i++) {
-                            System.out.println((i + 1) + " - " + manuaisConduta[i].getTitulo());
+                        TipoManual tipoParaEd = tiposEd[tipoIdxEd - 1];
+
+                        Manual[] todosParaEd = Manual.buscarManuaisDoBanco();
+                        Manual[] filtradosEd = Arrays.stream(todosParaEd)
+                                .filter(m -> m != null && m.getTipo() == tipoParaEd)
+                                .toArray(Manual[]::new);
+
+                        if (filtradosEd.length == 0) {
+                            traduzir("no-manual-found-of-type");
+                            break;
                         }
-                        int editarConduta = scanner.nextInt();
+
+                        System.out.println(tipoParaEd.getDescricao());
+
+                        for (int i = 0; i < filtradosEd.length; i++) {
+                            System.out.printf("%d) %s%n", i + 1, filtradosEd[i].getTitulo());
+                        }
+                        System.out.print("> ");
+                        int ed = scanner.nextInt();
                         scanner.nextLine();
-                        if (editarConduta >= 1 && editarConduta <= totalManuaisConduta) {
-                            ManualDeCondutaOperacional manual = manuaisConduta[editarConduta - 1];
-                            traduzir("what-you-want-to-edit");
-                            traduzir("title");
-                            traduzir("author");
-                            traduzir("text");
-                            traduzir("date-of-publication");
-                            int opcaoEdicao = scanner.nextInt();
-                            scanner.nextLine();
-
-                            switch (opcaoEdicao) {
-                                case 1:
-                                    manual.editarTitulo();
-                                    break;
-                                case 2:
-                                    manual.editarAutor();
-                                    break;
-                                case 3:
-                                    manual.editarTexto();
-                                    break;
-                                case 4:
-                                    manual.editarDataPublicacao();
-                                    break;
-                                default:
-                                    traduzir("invalid-option");
-                            }
-                        } else {
+                        if (ed < 1 || ed > filtradosEd.length) {
                             traduzir("invalid-option");
+                            break;
                         }
-                        break;
-                    case 5:
-                        traduzir("chose-the-number-to-edit");
-                        for (int i = 0; i < totalManuaisDiagnostico; i++) {
-                            System.out.println((i + 1) + " - " + manuaisDiagnostico[i].getTitulo());
-                        }
-                        int editarDiagnostico = scanner.nextInt();
+                        int idEd = filtradosEd[ed - 1].getIdManual();
+
+                        traduzir("what-you-want-to-edit");
+                        traduzir("1-title");
+                        traduzir("2-author");
+                        traduzir("3-text");
+                        traduzir("4-date-of-publication");
+                        traduzir("5-type");
+                        System.out.print("> ");
+                        int field = scanner.nextInt();
                         scanner.nextLine();
-                        if (editarDiagnostico >= 1 && editarDiagnostico <= totalManuaisDiagnostico) {
-                            ManualDeDiagnostico manual = manuaisDiagnostico[editarDiagnostico - 1];
-                            traduzir("what-you-want-to-edit");
-                            traduzir("title");
-                            traduzir("author");
-                            traduzir("text");
-                            traduzir("date-of-publication");
-                            int opcaoEdicao = scanner.nextInt();
-                            scanner.nextLine();
+                        switch (field) {
+                            case 1:
+                                traduzir("digit-new-title");
+                                System.out.print("> ");
+                                Manual.atualizarTitulo(idEd, scanner.nextLine());
+                                break;
+                            case 2:
+                                traduzir("digit-new-author");
+                                System.out.print("> ");
+                                Manual.atualizarAutor(idEd, scanner.nextLine());
+                                break;
+                            case 3:
+                                traduzir("digit-new-text");
+                                System.out.print("> ");
+                                Manual.atualizarTexto(idEd, scanner.nextLine());
+                                break;
+                            case 4:
+                                Manual.atualizarData(idEd, java.sql.Date.valueOf(scanner.nextLine()));
+                                break;
+                            case 5:
+                                traduzir("select-the-type-of-the-manual");
+                                traduzir("operational-conduct-manual");
+                                traduzir("diagnostic-manual");
+                                traduzir("maintenance-manual");
+                                traduzir("operation-manual");
+                                traduzir("security-manual");
+                                System.out.print("> ");
 
-                            switch (opcaoEdicao) {
-                                case 1:
-                                    manual.editarTitulo();
-                                    break;
-                                case 2:
-                                    manual.editarAutor();
-                                    break;
-                                case 3:
-                                    manual.editarTexto();
-                                    break;
-                                case 4:
-                                    manual.editarDataPublicacao();
-                                    break;
-                                default:
-                                    traduzir("invalid-option");
-                            }
-                        } else {
-                            traduzir("invalid-option");
+                                int nt = scanner.nextInt();
+                                scanner.nextLine();
+                                if (nt >= 1 && nt <= tiposEd.length) {
+                                    Manual.atualizarTipo(idEd, tiposEd[nt - 1]);
+                                }
+                                break;
+                            default:
+                                traduzir("invalid-option");
                         }
-                        break;
-                    default:
-                        traduzir("invalid-option");
-                }
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
+                    break;
 
-            } else if (escolha == 5) {
-                traduzir("closing-the-program");
-                break;
-            } else {
-                traduzir("invalid-optin-try-again");
+                case 5:
+
+                    traduzir("program-closing");
+                    try {
+                        // Delay para dar mais "veracidade" pro código, com essa firulinha de atraso
+                        Thread.sleep(1500); // 1,5 segundos
+                    } catch (InterruptedException e) {
+                        e.printStackTrace(); // Em caso de interrupção da thread, exibe o erro
+                    }
+
+                    traduzir("program-closed");
+                    return;
+
+                default:
+                    traduzir("invalid-option-try-again");
             }
-
         }
 
-        scanner.close();
-
     }
 
-    private static String obterMensagemTraduzida(String chaveParaTraduzir) {
-        String mensagem = chaveParaTraduzir;
-        try {
-            mensagem = mensagensNoIdiomaEscolhido.getString(chaveParaTraduzir);
-        } catch (Exception e) {
-            mensagem = chaveParaTraduzir;
-        }
-        return mensagem;
+    private static void traduzir(String chave) {
+        String mensagem = mensagensNoIdiomaEscolhido.optString(chave, chave);
+        System.out.println(mensagem);
     }
-
-    private static void traduzir(String chaveParaTraduzir) {
-        System.out.println(obterMensagemTraduzida(chaveParaTraduzir));
-    }
-
 }

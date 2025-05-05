@@ -1,15 +1,10 @@
 package com.wegone;
 
-import java.util.Map;
-
-import com.google.gson.Gson;
-
+import org.json.JSONObject;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Translator {
-    private Map<String, String> translations;
-
     public Translator(String languageCode) {
         loadTranslations(languageCode);
     }
@@ -18,12 +13,24 @@ public class Translator {
         try {
             String filePathString = "translate/" + languageCode + ".json";
             FileReader reader = new FileReader(filePathString);
-            Gson gson = new Gson();
-            translations = gson.fromJson(reader, Map.class);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    // O trecho abaixo é para fazer a tradução funcinoar dentro do TipoManual:
+
+    private static JSONObject mensagens;
+
+    public static void setMensagens(JSONObject mensagensNoIdioma) {
+        mensagens = mensagensNoIdioma;
+    }
+
+    public static String t(String chave) {
+        if (mensagens == null) {
+            return chave;
+        }
+        return mensagens.optString(chave, chave);
+    }
 }
