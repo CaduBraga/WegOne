@@ -1,0 +1,27 @@
+# Compilação do Maven
+/target/
+
+# Arquivos de log
+*.log
+
+# Configurações locais da IDE
+/.idea/
+/*.iml
+*.class
+
+# Configurações específicas do Eclipse
+/.classpath
+/.project
+/.settings/
+
+# Configurações específicas do IntelliJ
+/.idea/
+/*.iml
+/out/
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Outros
+.env
