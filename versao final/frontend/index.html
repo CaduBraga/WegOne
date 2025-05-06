@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WegOne</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body onload="changeLanguage()">
+
+
+<header>
+  <div><img src="/versao final/frontend/imagens/logoTransparente.png" alt="Weg Logo"></div>
+  <nav>
+    <select id="languageSelector" onchange="changeLanguage()">
+      <option value="pt">Português</option>
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="es">Español</option>
+    </select>
+    <img id="flag" class="flag" src="" alt="Bandeira">
+  </nav>
+</header>
+
+
+<main>
+  <h1 id="mainTitle"></h1>
+  <p id="mainParagraph"></p>
+
+
+  <div>
+    <button class="menu-option" onclick="showForm('cadastro')" id="btn-menu-cadastrar"></button>
+    <button class="menu-option" onclick="showForm('pesquisa')" id="btn-menu-pesquisar"></button>
+    <button class="menu-option" onclick="showForm('editar')"   id="btn-menu-editar"></button>
+    <button class="menu-option" onclick="showForm('excluir')"  id="btn-menu-excluir"></button>
+  </div>
+
+
+  <div id="form-container" class="form-container">
+    <!-- Cadastro -->
+    <div id="cadastro-form">
+      <h2 id="formTitle"></h2>
+      <label id="label-nome" for="Nome"></label>
+      <input type="text" id="Nome" placeholder="" required>
+
+
+      <label id="label-tipo" for="tipo"></label>
+      <select id="tipo"></select>
+
+
+      <label id="label-conteudo" for="conteudo-pt"></label>
+      <textarea id="conteudo-pt" rows="4" placeholder="" required></textarea>
+
+
+      <button class="menu-option" onclick="cadastrarOrientacao()" id="btn-cadastrar"></button>
+    </div>
+
+
+    <!-- Pesquisa -->
+    <div id="pesquisa-form" style="display:none;">
+      <label id="label-pesquisaNome" for="pesquisaNome"></label>
+      <input type="text" id="pesquisaNome" placeholder="">
+      <button class="menu-option" onclick="pesquisarOrientacao()" id="btn-pesquisar"></button>
+    </div>
+
+
+    <!-- Editar -->
+    <div id="editar-form" style="display:none;">
+      <label id="label-editarNome" for="editarNome"></label>
+      <input type="text" id="editarNome" placeholder="" required>
+      <button class="menu-option" onclick="editarOrientacao()" id="btn-editar"></button>
+    </div>
+
+
+    <!-- Excluir -->
+    <div id="excluir-form" style="display:none;">
+      <label id="label-excluirNome" for="excluirNome"></label>
+      <input type="text" id="excluirNome" placeholder="">
+      <button class="menu-option" onclick="excluirOrientacao()" id="btn-excluir"></button>
+    </div>
+  </div>
+</main>
+
+
+<footer>&copy; 2025 WegOne. Todos os direitos reservados.</footer>
+
+
+<script>
+  const orientacoes = [];
+
+
+  const translations = {
+    pt: {
+      title: "Bem-vindo à WegOne",
+      paragraph: "Escolha uma opção abaixo para começar.",
+      flag: "https://flagpedia.net/data/flags/h80/br.png",
+      menu: { cadastrar:"Cadastrar Orientação", pesquisar:"Pesquisar Orientação", editar:"Editar Orientação", excluir:"Excluir Orientação" },
+      formTitle: "Cadastro de Orientação",
+      placeholders: {
+        nome:"Digite o nome", conteudo:"Digite o conteúdo em português",
+        pesquisaNome:"Digite o nome da orientação", editarNome:"Digite o nome", excluirNome:"Digite o nome da orientação"
+      },
+      labels: {
+        nome:"Nome da Orientação:", tipo:"Tipo da Orientação:", conteudo:"Conteúdo:",
+        pesquisaNome:"Pesquisar por Nome:", editarNome:"Nome da Orientação:", excluirNome:"Excluir Orientação (por Nome):"
+      },
+      buttons:{ cadastrar:"Cadastrar", pesquisar:"Pesquisar", editar:"Editar", excluir:"Excluir" },
+      tipoOptions:[
+        {value:"Manual de Operação", text:"Manual de Operação"},
+        {value:"Procedimento de Segurança", text:"Procedimento de Segurança"},
+        {value:"Manutenção e Reparos", text:"Manutenção e Reparos"},
+        {value:"Testes e Diagnóstico", text:"Testes e Diagnóstico"},
+        {value:"Manual de Conduta e Operações Setoriais", text:"Manual de Conduta e Operações Setoriais"}
+      ]
+    },
+    en: {
+      title:"Welcome to WegOne", paragraph:"Choose an option below to get started.",
+      flag:"https://flagpedia.net/data/flags/h80/us.png",
+      menu:{ cadastrar:"Register Orientation", pesquisar:"Search Orientation", editar:"Edit Orientation", excluir:"Delete Orientation" },
+      formTitle:"Orientation Registration",
+      placeholders:{
+        nome:"Type your name", conteudo:"Type the content in English",
+        pesquisaNome:"Type the orientation name", editarNome:"Type the name", excluirNome:"Type the orientation name"
+      },
+      labels:{
+        nome:"Orientation Name:", tipo:"Orientation Type:", conteudo:"Content:",
+        pesquisaNome:"Search by Name:", editarNome:"Orientation Name:", excluirNome:"Delete Orientation (by Name):"
+      },
+      buttons:{ cadastrar:"Register", pesquisar:"Search", editar:"Edit", excluir:"Delete" },
+      tipoOptions:[
+        {value:"Operation Manual", text:"Operation Manual"},
+        {value:"Safety Procedure", text:"Safety Procedure"},
+        {value:"Maintenance and Repairs", text:"Maintenance and Repairs"},
+        {value:"Testing and Diagnostics", text:"Testing and Diagnostics"},
+        {value:"Conduct and Operations Manual", text:"Conduct and Operations Manual"}
+      ]
+    },
+    de: {
+      title:"Willkommen bei WegOne", paragraph:"Wählen Sie eine Option unten, um zu beginnen.",
+      flag:"https://flagpedia.net/data/flags/h80/de.png",
+      menu:{ cadastrar:"Orientierung erfassen", pesquisar:"Orientierung suchen", editar:"Orientierung bearbeiten", excluir:"Orientierung löschen" },
+      formTitle:"Orientierungserfassung",
+      placeholders:{
+        nome:"Geben Sie den Namen ein", conteudo:"Geben Sie den Inhalt auf Deutsch ein",
+        pesquisaNome:"Geben Sie den Namen ein", editarNome:"Geben Sie den Namen ein", excluirNome:"Geben Sie den Namen ein"
+      },
+      labels:{
+        nome:"Name der Orientierung:", tipo:"Art der Orientierung:", conteudo:"Inhalt:",
+        pesquisaNome:"Suche nach Namen:", editarNome:"Name der Orientierung:", excluirNome:"Orientierung löschen (nach Name):"
+      },
+      buttons:{ cadastrar:"Erfassen", pesquisar:"Suchen", editar:"Bearbeiten", excluir:"Löschen" },
+      tipoOptions:[
+        {value:"Betriebsanleitung", text:"Betriebsanleitung"},
+        {value:"Sicherheitsverfahren", text:"Sicherheitsverfahren"},
+        {value:"Wartung und Reparaturen", text:"Wartung und Reparaturen"},
+        {value:"Tests und Diagnostik", text:"Tests und Diagnostik"},
+        {value:"Verhaltens- und Betriebsanleitung", text:"Verhaltens- und Betriebsanleitung"}
+      ]
+    },
+    es: {
+      title:"Bienvenido a WegOne", paragraph:"Elige una opción abajo para comenzar.",
+      flag:"https://flagpedia.net/data/flags/h80/es.png",
+      menu:{ cadastrar:"Registrar Orientación", pesquisar:"Buscar Orientación", editar:"Editar Orientación", excluir:"Eliminar Orientación" },
+      formTitle:"Registro de Orientación",
+      placeholders:{
+        nome:"Escribe el nombre", conteudo:"Escribe el contenido en español",
+        pesquisaNome:"Escribe el nombre de la orientación", editarNome:"Escribe el nombre", excluirNome:"Escribe el nombre de la orientación"
+      },
+      labels:{
+        nome:"Nombre de la Orientación:", tipo:"Tipo de Orientación:", conteudo:"Contenido:",
+        pesquisaNome:"Buscar por Nombre:", editarNome:"Nombre de la Orientación:", excluirNome:"Eliminar Orientación (por Nombre):"
+      },
+      buttons:{ cadastrar:"Registrar", pesquisar:"Buscar", editar:"Editar", excluir:"Eliminar" },
+      tipoOptions:[
+        {value:"Manual de Operación", text:"Manual de Operación"},
+        {value:"Procedimiento de Seguridad", text:"Procedimiento de Seguridad"},
+        {value:"Mantenimiento y Reparaciones", text:"Mantenimiento y Reparaciones"},
+        {value:"Pruebas y Diagnóstico", text:"Pruebas y Diagnóstico"},
+        {value:"Manual de Conducta y Operaciones", text:"Manual de Conducta y Operaciones"}
+      ]
+    }
+  };
+
+
+  function changeLanguage() {
+    const lang = document.getElementById('languageSelector').value;
+    const t = translations[lang];
+
+
+    // títulos e bandeira
+    document.getElementById('mainTitle').textContent     = t.title;
+    document.getElementById('mainParagraph').textContent = t.paragraph;
+    document.getElementById('flag').src                  = t.flag;
+
+
+    // menu
+    document.getElementById('btn-menu-cadastrar').textContent = t.menu.cadastrar;
+    document.getElementById('btn-menu-pesquisar').textContent = t.menu.pesquisar;
+    document.getElementById('btn-menu-editar').textContent    = t.menu.editar;
+    document.getElementById('btn-menu-excluir').textContent   = t.menu.excluir;
+
+
+    // formulário de cadastro
+    document.getElementById('formTitle').textContent    = t.formTitle;
+    document.getElementById('label-nome').textContent   = t.labels.nome;
+    document.getElementById('Nome').placeholder         = t.placeholders.nome;
+    document.getElementById('label-tipo').textContent   = t.labels.tipo;
+    const tipoSelect = document.getElementById('tipo');
+    tipoSelect.innerHTML = t.tipoOptions.map(o => `<option value="${o.value}">${o.text}</option>`).join('');
+    document.getElementById('label-conteudo').textContent  = t.labels.conteudo;
+    document.getElementById('conteudo-pt').placeholder     = t.placeholders.conteudo;
+    document.getElementById('btn-cadastrar').textContent   = t.buttons.cadastrar;
+
+
+    // pesquisa
+    document.getElementById('label-pesquisaNome').textContent = t.labels.pesquisaNome;
+    document.getElementById('pesquisaNome').placeholder       = t.placeholders.pesquisaNome;
+    document.getElementById('btn-pesquisar').textContent      = t.buttons.pesquisar;
+
+
+    // editar
+    document.getElementById('label-editarNome').textContent   = t.labels.editarNome;
+    document.getElementById('editarNome').placeholder         = t.placeholders.editarNome;
+    document.getElementById('btn-editar').textContent         = t.buttons.editar;
+
+
+    // excluir
+    document.getElementById('label-excluirNome').textContent  = t.labels.excluirNome;
+    document.getElementById('excluirNome').placeholder        = t.placeholders.excluirNome;
+    document.getElementById('btn-excluir').textContent        = t.buttons.excluir;
+  }
+
+
+  function showForm(formType) {
+    document.getElementById('form-container').style.display = 'block';
+    ['cadastro','pesquisa','editar','excluir'].forEach(id => {
+      document.getElementById(id+'-form').style.display = formType===id ? 'block':'none';
+    });
+  }
+
+
+  // CRUD:
+  function cadastrarOrientacao() {
+    const nome = document.getElementById('Nome').value.trim();
+    const tipo = document.getElementById('tipo').value;
+    const conteudoPt = document.getElementById('conteudo-pt').value.trim();
+    orientacoes.push({ nome, tipo, conteudoPt });
+    Swal.fire('Sucesso!', 'Orientação cadastrada com sucesso!', 'success');
+    document.getElementById('Nome').value = '';
+    document.getElementById('tipo').selectedIndex = 0;
+    document.getElementById('conteudo-pt').value = '';
+  }
+
+
+  function pesquisarOrientacao() {
+    const pesquisaNome = document.getElementById('pesquisaNome').value.toLowerCase();
+    const resultados = orientacoes.filter(o=>o.nome.toLowerCase().includes(pesquisaNome));
+    if (!resultados.length) {
+      return Swal.fire('Nenhum resultado','Nenhuma orientação encontrada.','warning');
+    }
+    let msg = resultados.map(o=>`Nome: ${o.nome}, Tipo: ${o.tipo}`).join('<br>');
+    Swal.fire('Resultados da Pesquisa', msg, 'info');
+  }
+
+
+  async function editarOrientacao() {
+    const nomeAntigo = document.getElementById('editarNome').value.trim();
+    const idx = orientacoes.findIndex(o=>o.nome.toLowerCase()===nomeAntigo.toLowerCase());
+    if (idx<0) return Swal.fire('Erro','Orientação não encontrada.','error');
+    const { value: novoNome } = await Swal.fire({ title:'Novo Nome', input:'text', inputPlaceholder:'Novo nome', showCancelButton:true });
+    if (!novoNome) return Swal.fire('Cancelado','Edição cancelada.','error');
+    orientacoes[idx].nome = novoNome;
+    Swal.fire('Editado!','Nome atualizado com sucesso.','success');
+  }
+
+
+  async function excluirOrientacao() {
+    const nome = document.getElementById('excluirNome').value.trim();
+    const idx = orientacoes.findIndex(o=>o.nome.toLowerCase()===nome.toLowerCase());
+    if (idx<0) return Swal.fire('Erro','Orientação não encontrada.','error');
+    const { isConfirmed } = await Swal.fire({ title:'Confirmar Exclusão', text:`Excluir "${nome}"?`, showCancelButton:true, confirmButtonText:'Sim, excluir' });
+    if (isConfirmed) {
+      orientacoes.splice(idx,1);
+      Swal.fire('Excluído!','Orientação removida.','success');
+    }
+  }
+</script>
+</body>
+</html>
