@@ -1,3 +1,4 @@
+
 <p align="center">
   <img src="/versao final/frontend/imagens/logoTransparente.png" alt="Logo do Projeto" width="300">
 </p>
@@ -54,6 +55,27 @@ O projeto está dividido em duas versões principais:
 
 ### 💻 **Protótipo de Front-End**
 1. Abra os arquivos HTML e CSS em um navegador para visualizar o layout.
+
+### 🖥️ **Executar via Terminal (Java)**
+1. **Abra o terminal** e navegue até o diretório da versão desejada (por exemplo, versão com arrays ou com banco de dados):
+   ```bash
+   cd caminho/do/projeto
+   ```
+
+2. **Compile o arquivo principal Java** (substitua `Main.java` pelo nome do seu arquivo principal):
+   ```bash
+   javac Main.java
+   ```
+
+3. **Execute o programa:**
+   ```bash
+   java Main
+   ```
+
+> **💡 Dica:** Certifique-se de que o Java está instalado e corretamente configurado na sua máquina (variável de ambiente `JAVA_HOME` e comando `java` funcionando no terminal). Para verificar:
+   ```bash
+   java -version
+   ```
 
 ---
 
