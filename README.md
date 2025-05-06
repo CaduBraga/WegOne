@@ -85,10 +85,10 @@ Este projeto foi desenvolvido como parte de um aprendizado em equipe. Futuras me
 
 ### 👨‍💻 **Equipe**
 - **Equipe Dev**:
-  - <a href="https://github.com/andreluismiotto" target="_blank">André Luis Miotto Pereira</a> - **Product Owner e Traduções (JSON)**
+  - <a href="https://github.com/andrMiotto" target="_blank">André Luis Miotto Pereira</a> - **Product Owner e Traduções (JSON)**
   - <a href="https://github.com/CaduBraga" target="_blank">Carlos Eduardo Braga</a> - **DBA**
   - <a href="https://github.com/lucasschlei" target="_blank">Lucas Schlei</a> - **Scrum Master e Dev Front-End**
-  - <a href="https://github.com/murilokerschbaum" target="_blank">Murilo Kerschbaum</a> - **Dev Front-End**
+  - <a href="https://github.com/Murilo2901" target="_blank">Murilo Kerschbaum</a> - **Dev Front-End**
 
 ### 📚 **Agradecimentos**
 Gostaríamos de agradecer aos professores que disponibilizaram tempo de aula para trabalharmos no projeto:
