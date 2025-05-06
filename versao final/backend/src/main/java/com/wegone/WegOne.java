@@ -42,7 +42,7 @@ public class WegOne {
         System.out.print("> ");
         String usuario = scanner.nextLine();
 
-        if (!UsuarioDAO.usuarioExiste(usuario)) {
+        if (!ValidacaoUsuario.usuarioExiste(usuario)) {
             traduzir("invalid-username");
             return;
         }
@@ -51,12 +51,12 @@ public class WegOne {
         System.out.print("> ");
         String senha = scanner.nextLine();
 
-        if (!UsuarioDAO.validarSenha(usuario, senha)) {
+        if (!ValidacaoUsuario.validarSenha(usuario, senha)) {
             traduzir("invalid-password");
             return;
         }
 
-        userRole = UsuarioDAO.obterPapelDoUsuario(usuario, senha);
+        userRole = ValidacaoUsuario.obterPapelDoUsuario(usuario, senha);
 
         while (true) {
             int escolha = IdiomaHelper.exibirMenuInicial(userRole, scanner);

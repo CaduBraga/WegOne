@@ -1,4 +1,4 @@
-package com.wegone;
+package com.WegOne;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Scanner;
 import org.json.JSONObject;
 
-public class WegOne {
+public class Principal {
 
     static JSONObject mensagensNoIdiomaEscolhido;
 
@@ -55,7 +55,7 @@ public class WegOne {
                 return;
         }
 
-        InputStream inputStream = WegOne.class.getClassLoader()
+        InputStream inputStream = Principal.class.getClassLoader()
                 .getResourceAsStream("translate/" + codigoIdioma + ".json");
 
         if (inputStream == null) {

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import org.json.JSONObject;
 
-public class UsuarioDAO {
+public class ValidacaoUsuario {
     static JSONObject mensagensNoIdiomaEscolhido;
 
     public static boolean usuarioExiste(String usuario) {

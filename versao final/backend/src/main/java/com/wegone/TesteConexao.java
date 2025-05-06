@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.json.JSONObject;
 
-public class TestaConexao {
+public class TesteConexao {
     static JSONObject mensagensNoIdiomaEscolhido;
 
     public static void main(String[] args) {

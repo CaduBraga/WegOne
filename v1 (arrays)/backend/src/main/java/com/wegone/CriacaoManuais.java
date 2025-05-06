@@ -1,4 +1,4 @@
-package com.wegone;
+package com.WegOne;
 
 import java.util.Date;
 
