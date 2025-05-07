@@ -6,12 +6,12 @@
 ## 📝 Descrição
 Este repositório contém o projeto desenvolvido como parte da **Situação de Aprendizagem Interdisciplinar** do **CentroWeg - MIDS 77**. O objetivo foi integrar os conhecimentos adquiridos nas disciplinas de:
 
-- **Técnicas de Programação**
+- **Lógica da Programação**
 - **Implementação de Banco de Dados**
 - **Inglês Técnico**
 - **Metodologias Ágeis e Versionamento**
 
-Além disso, utilizamos também conhecimentos de outras disciplinas, como **Lógica da Programação**, **Web Design UI/UX** e **Programação Front-End**, entre outras.
+Além disso, utilizamos também conhecimentos de outras disciplinas, como **Técnicas de Programação**, **Web Design UI/UX** e **Programação Front-End**, entre outras.
 
 ---
 
