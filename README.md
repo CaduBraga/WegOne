@@ -3,7 +3,7 @@
   <img src="/versao final/frontend/imagens/logoTransparente.png" alt="Logo do Projeto" width="300">
 </p>
 
-## 📝 Descrição
+# 📝 Descrição
 Este repositório contém o projeto desenvolvido como parte da **Situação de Aprendizagem Interdisciplinar** do **CentroWeg - MIDS 77**. O objetivo foi integrar os conhecimentos adquiridos nas disciplinas de:
 
 - **Lógica da Programação**
@@ -15,24 +15,47 @@ Além disso, utilizamos também conhecimentos de outras disciplinas, como **Téc
 
 ---
 
-## 📂 Estrutura do Projeto
+# 📂 Estrutura do Projeto
 
 O projeto está dividido em duas versões principais:
 
-### 🧮 **Versão 1: Utilizando Arrays**
+## 🧮 Versão 1: Utilizando Arrays
 - Aplicação dos conceitos de **Arrays**, ensinados na disciplina de **Técnicas de Programação**.
 - Foco no entendimento da manipulação de dados em memória e lógica de programação.
 
-### 🌐 **Versão 2: Banco de Dados Integrado + Front-End**
+## 🌐 Versão 2: Banco de Dados Integrado + Front-End
 - **Banco de Dados Integrado**: Utilizamos o **Railway** para hospedar o banco de dados na nuvem, permitindo o armazenamento e a recuperação de dados de forma persistente.
 - **Segurança**: Implementação de autenticação de usuários com login e senha, restringindo ações indesejadas através do banco de dados.
 - **Front-End**: Protótipo de interface desenvolvido para demonstrar como o sistema poderia ser apresentado ao usuário final.
 
 > **⚠ Nota:** O front-end não foi integrado ao back-end no projeto final devido ao tempo limitado. Ele está incluído apenas como uma referência visual.
 
+## 🗂️ Outros Arquivos e Configurações
+
+### .vscode/
+- Diretório contendo configurações específicas do Visual Studio Code, como ajustes de espaço, formatação automática e extensões recomendadas para o projeto.
+- Facilita a padronização do ambiente de desenvolvimento para todos os colaboradores.
+
+### .gitignore
+- Lista de arquivos e diretórios ignorados pelo controle de versão.
+- Inclui:
+  - Diretórios de compilação (`/target/`).
+  - Configurações de IDEs (`/.idea/`, `*.iml`, etc.).
+  - Logs (`*.log`).
+  - Arquivos de sistema (`.DS_Store`, `Thumbs.db`).
+  - Arquivo de ambiente (`.env`).
+
+### Relatório de Acompanhamento de participação
+- Documento detalhando o progresso do projeto, incluindo:
+  - Relatório de acompanhamento
+  - QUadros de participação (individuais e por grupo)
+  - Resumo geral
+  - Pontos de atenção
+  - 
+
 ---
 
-## 🛠️ Tecnologias Utilizadas
+# 🛠️ Tecnologias Utilizadas
 
 - **Java**: Para desenvolvimento da lógica de negócios e funcionalidades principais.
 - **HTML e CSS**: Para criação do protótipo de front-end.
@@ -42,21 +65,21 @@ O projeto está dividido em duas versões principais:
 
 ---
 
-## ▶️ Como Executar
+# ▶️ Como Executar
 
-### 🧮 **Versão com Arrays**
+## 🧮 **Versão com Arrays**
 1. Navegue até o diretório correspondente à primeira versão.
 2. Compile e execute o arquivo principal utilizando qualquer IDE ou terminal com suporte a Java.
 
-### 🌐 **Versão com Banco de Dados**
+## 🌐 **Versão com Banco de Dados**
 1. Navegue até o diretório correspondente à segunda versão.
 2. Compile e execute o arquivo principal.
 3. **Nota:** Caso ocorra algum erro, verifique a sua conexão com o banco de dados.
 
-### 💻 **Protótipo de Front-End**
+## 💻 **Protótipo de Front-End**
 1. Abra os arquivos HTML e CSS em um navegador para visualizar o layout.
 
-### 🖥️ **Executar via Terminal (Java)**
+## 🖥️ **Executar via Terminal (Java)**
 1. **Abra o terminal** e navegue até o diretório da versão desejada (por exemplo, versão com arrays ou com banco de dados):
    ```bash
    cd caminho/do/projeto
@@ -79,18 +102,18 @@ O projeto está dividido em duas versões principais:
 
 ---
 
-## 🤝 Contribuição
+# 🤝 Contribuição
 
 Este projeto foi desenvolvido como parte de um aprendizado em equipe. Futuras melhorias e integrações podem incluir, por exemplo, a integração completa do front-end com o back-end.
 
-### 👨‍💻 **Equipe**
+## 👨‍💻 **Equipe**
 - **Equipe Dev**:
   - <a href="https://github.com/andrMiotto" target="_blank">André Luis Miotto Pereira</a> - **Product Owner e Traduções (JSON)**
   - <a href="https://github.com/CaduBraga" target="_blank">Carlos Eduardo Braga</a> - **DBA**
   - <a href="https://github.com/lucasschlei" target="_blank">Lucas Schlei</a> - **Scrum Master e Dev Front-End**
   - <a href="https://github.com/Murilo2901" target="_blank">Murilo Kerschbaum</a> - **Dev Front-End**
 
-### 📚 **Agradecimentos**
+## 📚 **Agradecimentos**
 Gostaríamos de agradecer aos professores que disponibilizaram tempo de aula para trabalharmos no projeto:
 
 - **Professores Orientadores**:
