@@ -37,8 +37,8 @@ O projeto está dividido em duas versões principais:
 - **Java**: Para desenvolvimento da lógica de negócios e funcionalidades principais.
 - **HTML e CSS**: Para criação do protótipo de front-end.
 - **SQL**: Para criação e gerenciamento do banco de dados.
-- **Railway**: Para hospedagem do banco de dados na nuvem.
-- **Jira**: Para aplicação da metodologia **Scrum** no gerenciamento do projeto.
+- **[Railway](https://railway.com/)**: Para hospedagem do banco de dados na nuvem.
+- **[Jira](https://wegone.atlassian.net/jira/software/projects/SCRUM/summary)**: Para aplicação da metodologia **Scrum** no gerenciamento do projeto.
 
 ---
 
