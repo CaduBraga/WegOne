@@ -2,7 +2,6 @@
     box-sizing: border-box;
 }
 
-
 html, body {
     margin: 0;
     padding: 0;
@@ -12,7 +11,6 @@ html, body {
     height: 100%;
     overflow-x: hidden;
 }
-
 
 header {
     background: #003366;
@@ -29,18 +27,15 @@ header {
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-
 header img.logo {
     width: 55px;
     height: auto;
 }
 
-
 nav {
     display: flex;
     align-items: center;
 }
-
 
 nav select#languageSelector {
     padding: 0.3rem 0.5rem;
@@ -54,11 +49,9 @@ nav select#languageSelector {
     transition: background-color 0.3s ease;
 }
 
-
 nav select#languageSelector:hover {
     background-color: #001d3b;
 }
-
 
 nav img.flag {
     width: 32px;
@@ -69,26 +62,23 @@ nav img.flag {
     object-fit: cover;
 }
 
-
 main {
     max-width: 650px;
     margin: 80px auto 80px auto;
     padding: 0 1rem 3rem 1rem;
     min-height: calc(100vh - 135px);
-    display: flex; /* Adiciona flexbox ao main */
-    flex-direction: column; /* Define a direção como coluna */
-    align-items: center; /* Centraliza os itens horizontalmente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
 
 main h1#mainTitle {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.3rem;
     user-select: none;
-    text-align: center; /* Centraliza o texto do título */
+    text-align: center;
 }
-
 
 main p#mainParagraph {
     font-size: 1rem;
@@ -96,9 +86,8 @@ main p#mainParagraph {
     margin-bottom: 1.5rem;
     font-weight: 500;
     user-select: none;
-    text-align: center; /* Centraliza o texto do parágrafo */
+    text-align: center;
 }
-
 
 .menu-container {
     display: flex;
@@ -107,7 +96,6 @@ main p#mainParagraph {
     gap: 10px;
     margin-bottom: 1.8rem;
 }
-
 
 button.menu-option {
     background-color: #002346;
@@ -124,12 +112,10 @@ button.menu-option {
     user-select: none;
 }
 
-
 button.menu-option:hover {
     background-color: #003366;
     transform: translateY(-2px);
 }
-
 
 .form-container {
     display: none;
@@ -140,14 +126,14 @@ button.menu-option:hover {
     max-width: 645px;
     margin: 0 auto 40px auto;
     user-select: text;
+    width: 100%;
 }
-
 
 form {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
 }
-
 
 form label {
     font-weight: 600;
@@ -156,7 +142,6 @@ form label {
     color: #003366;
     user-select: text;
 }
-
 
 form input[type="text"],
 form input[type="email"],
@@ -169,8 +154,9 @@ form textarea {
     font-size: 1rem;
     resize: vertical;
     transition: border-color 0.3s ease;
+    width: calc(100% - 28px); /* Subtrai o padding horizontal para o tamanho correto */
+    max-width: 600px; /* Limita a largura máxima dos campos */
 }
-
 
 form input[type="text"]:focus,
 form input[type="email"]:focus,
@@ -182,11 +168,9 @@ form textarea:focus {
     box-shadow: 0 0 6px #003366aa;
 }
 
-
 form textarea {
     min-height: 90px;
 }
-
 
 form button[type="submit"] {
     margin-top: 18px;
@@ -202,12 +186,10 @@ form button[type="submit"] {
     transition: background-color 0.3s ease, transform 0.15s ease;
 }
 
-
 form button[type="submit"]:hover {
     background-color: #003366;
     transform: translateY(-2px);
 }
-
 
 footer {
     background: #001d3b;
@@ -224,7 +206,6 @@ footer {
     z-index: 10;
 }
 
-
 @media (max-width: 400px) {
     main {
         margin: 70px 10px 80px 10px;
@@ -237,12 +218,10 @@ footer {
     }
 }
 
-
 .form-scroll {
     max-height: 400px;
     overflow-y: auto;
 }
-
 
 #userInfo {
     font-weight: 600;
@@ -252,7 +231,6 @@ footer {
     text-align: center;
     font-size: 1.1rem;
 }
-
 
 .link-button {
     background: none;
@@ -267,19 +245,16 @@ footer {
     transition: color 0.3s ease;
 }
 
-
 .link-button:hover {
     color: #002346;
     text-decoration: underline;
 }
-
 
 input.success,
 select.success,
 textarea.success {
     border-color: #28a745 !important;
 }
-
 
 input.error,
 select.error,
