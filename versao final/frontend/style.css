@@ -1,87 +1,288 @@
-body {
-    font-family: Arial, sans-serif;
+*{
+    box-sizing: border-box;
+}
+
+
+html, body {
     margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #fff;
     color: #003366;
+    height: 100%;
+    overflow-x: hidden;
 }
-   
+
+
 header {
     background: #003366;
     color: #fff;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+    height: 65px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
- 
+
+
+header img.logo {
+    width: 55px;
+    height: auto;
+}
+
+
 nav {
     display: flex;
     align-items: center;
 }
 
 
-nav select {
-    padding: .30rem;
+nav select#languageSelector {
+    padding: 0.3rem 0.5rem;
     border-radius: 5px;
     border: none;
     margin-left: 10px;
+    background-color: #002346;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-   
+
+
+nav select#languageSelector:hover {
+    background-color: #001d3b;
+}
+
+
+nav img.flag {
+    width: 32px;
+    height: 21px;
+    margin-left: 10px;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    object-fit: cover;
+}
+
+
 main {
-    padding: 1rem;
-    text-align: center;
+    max-width: 650px;
+    margin: 80px auto 80px auto;
+    padding: 0 1rem 3rem 1rem;
+    min-height: calc(100vh - 135px);
+    display: flex; /* Adiciona flexbox ao main */
+    flex-direction: column; /* Define a direção como coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
 }
-   
+
+
+main h1#mainTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    user-select: none;
+    text-align: center; /* Centraliza o texto do título */
+}
+
+
+main p#mainParagraph {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    user-select: none;
+    text-align: center; /* Centraliza o texto do parágrafo */
+}
+
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 1.8rem;
+}
+
+
+button.menu-option {
+    background-color: #002346;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 7px;
+    cursor: pointer;
+    max-width: 180px;
+    flex: 1 1 150px;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    user-select: none;
+}
+
+
+button.menu-option:hover {
+    background-color: #003366;
+    transform: translateY(-2px);
+}
+
+
+.form-container {
+    display: none;
+    background-color: #f4f4f4;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    max-width: 645px;
+    margin: 0 auto 40px auto;
+    user-select: text;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+form label {
+    font-weight: 600;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    color: #003366;
+    user-select: text;
+}
+
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form select,
+form textarea {
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    font-size: 1rem;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #003366;
+    outline: none;
+    box-shadow: 0 0 6px #003366aa;
+}
+
+
+form textarea {
+    min-height: 90px;
+}
+
+
+form button[type="submit"] {
+    margin-top: 18px;
+    background-color: #002346;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 700;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+}
+
+
+form button[type="submit"]:hover {
+    background-color: #003366;
+    transform: translateY(-2px);
+}
+
+
 footer {
     background: #001d3b;
     color: #fff;
     text-align: center;
-    padding: 1rem;
+    padding: 20px 10px;
     position: fixed;
     bottom: 0;
     width: 100%;
+    font-size: 0.9rem;
+    font-weight: 600;
+    user-select: none;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.3);
+    z-index: 10;
 }
-   
-.flag {
-    width: 30px;
-    height: auto;
-    margin-left: 5px;
+
+
+@media (max-width: 400px) {
+    main {
+        margin: 70px 10px 80px 10px;
+    }
+    button.menu-option {
+        max-width: 100%;
+        flex: 1 1 100%;
+        font-size: 0.95rem;
+        padding: 10px 15px;
+    }
 }
-   
-.menu-option {
-    padding: 10px;
-    font-size: 16px;
-    margin: 5px;
-    background: #002346;
-    color: #fff;
+
+
+.form-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+#userInfo {
+    font-weight: 600;
+    color: #003366;
+    margin-bottom: 1rem;
+    user-select: none;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+
+.link-button {
+    background: none;
     border: none;
+    color: #003366;
     cursor: pointer;
-}
-   
-.menu-option:hover {
-    background: #003366;
-}
-   
-.form-container {
-    display: none;
-    margin: 20px auto;
-    max-width: 645px;
-    padding: 20px;
-    background: #f4f4f4;
-    border-radius: 10px;
-    text-align: left;
-}
-   
-.form-container input,
-.form-container select,
-.form-container textarea {
-    width: 100%; padding: 10px;
-    margin: 10px 0; border-radius: 5px;
-    border: 1px solid #ccc;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0;
+    margin-top: 10px;
+    user-select: none;
+    transition: color 0.3s ease;
 }
 
 
-img {
-    width: 65px;
-    height: auto;
+.link-button:hover {
+    color: #002346;
+    text-decoration: underline;
+}
+
+
+input.success,
+select.success,
+textarea.success {
+    border-color: #28a745 !important;
+}
+
+
+input.error,
+select.error,
+textarea.error {
+    border-color: #dc3545 !important;
 }
