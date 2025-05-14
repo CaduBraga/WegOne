@@ -29,14 +29,14 @@ O WegOne é um sistema de gerenciamento de manuais técnicos que permite:
 WegOne/
 ├── src/
 │   ├── main/
-│   │   ├── java/           # Código fonte Java
+│   │   ├── java/            # Código fonte Java
 │   │   └── resources/
-│   │       └── translate/  # Arquivos de tradução
-│   └── test/              # Testes unitários
-├── .vscode/               # Configurações do VS Code
-├── target/               # Arquivos compilados
-├── pom.xml              # Configuração Maven
-└── README.md           # Documentação
+│   │       └── translate/   # Arquivos de tradução
+│   └── test/                # Testes unitários
+├── .vscode/                 # Configurações do VS Code
+├── target/                  # Arquivos compilados
+├── pom.xml                  # Configuração Maven
+└── README.md                # Documentação
 ```
 
 ## 🗂️ Componentes Principais
