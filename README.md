@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/logo.png" alt="Logo do Projeto" width="300">
+  <img src="/src/main/webapp/imagens/logoTransparente.png" alt="Logo do Projeto" width="300">
 </p>
 
 # 📝 Descrição
@@ -19,7 +19,7 @@ O WegOne é um sistema de gerenciamento de manuais técnicos que permite:
 - Cadastro e gerenciamento de diferentes tipos de manuais
 - Suporte a múltiplos idiomas (Português, Inglês, Espanhol, Francês e Alemão)
 - Interface intuitiva para usuários
-- Armazenamento seguro dos dados
+- Armazenamento seguro dos dados através de um banco de dados na nuvem
 
 ---
 
@@ -29,31 +29,16 @@ O WegOne é um sistema de gerenciamento de manuais técnicos que permite:
 WegOne/
 ├── src/
 │   ├── main/
-│   │   ├── java/            # Código fonte Java
+│   │   ├── java/                   # Código fonte Java
 │   │   └── resources/
-│   │       └── translate/   # Arquivos de tradução
-│   └── test/                # Testes unitários
-├── .vscode/                 # Configurações do VS Code
-├── target/                  # Arquivos compilados
-├── pom.xml                  # Configuração Maven
-└── README.md                # Documentação
+│   │       └── translate/          # Arquivos de tradução
+│   └── test/                       # Testes unitários
+├── .vscode/                        # Configurações do VS Code
+├── target/                         # Arquivos compilados
+├── pom.xml                         # Configuração Maven
+├── README.md                       # Documentação
+└── Relatorio de acompanhamento.pdf # Relatório de atividades
 ```
-
-## 🗂️ Componentes Principais
-
-### 📚 Manuais Suportados
-- Manual de Conduta Operacional
-- Manual de Diagnóstico
-- Manual de Manutenção
-- Manual de Operação
-- Manual de Segurança
-
-### 🌐 Suporte a Idiomas
-- Português (pt.json)
-- Inglês (en.json)
-- Espanhol (es.json)
-- Francês (fr.json)
-- Alemão (de.json)
 
 ---
 
@@ -64,6 +49,19 @@ WegOne/
 - **JSON**: Arquivos de tradução
 - **Git**: Controle de versão
 - **[Jira](https://wegone.atlassian.net/jira/software/projects/SCRUM/summary)**: Gerenciamento ágil do projeto (Scrum)
+- **[Railway](https://railway.com/project/d14c7361-63e6-470e-9e43-4707af562791?environmentId=6efe2ce2-5ce4-40b2-9129-1f8a9e87c5c0)**: Plataforma de hospedagem e integração com banco de dados
+- **HTML/CSS**: Desenvolvimento do frontend
+
+---
+
+# 📱 Versão Atual
+
+Na versão atual do projeto, implementamos:
+- Frontend completo com interface moderna e responsiva
+- Integração com banco de dados através do Railway
+- Sistema de tradução multi-idioma
+
+> **⚠️ Nota:** O frontend foi desenvolvido como um protótipo funcional, mas devido a limitações de tempo, não foi possível realizar a integração completa com o backend. O sistema está pronto para receber as integrações necessárias em futuras versões.
 
 ---
 
@@ -78,7 +76,7 @@ WegOne/
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/seu-usuario/WegOne.git
+   git clone https://github.com/CaduBraga/WegOne.git
    cd WegOne
    ```
 
@@ -135,4 +133,4 @@ E aos demais professores que nos apoiaram em outras etapas do projeto:
 
 ## 💡 Observação Final
 
-Este projeto foi desenvolvido com foco em boas práticas de programação, documentação clara e código limpo. A estrutura modular permite fácil manutenção e expansão futura.
+Este projeto foi desenvolvido com foco em boas práticas de programação, documentação clara e código limpo. A estrutura modular permite fácil manutenção e expansão futura. 
