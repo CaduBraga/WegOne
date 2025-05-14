@@ -1,4 +1,4 @@
-package com.WegOne;
+package com.wegone;
 
 public enum TipoManual {
     CONDUTA_OPERACIONAL("manual-type-operational"),
@@ -14,6 +14,6 @@ public enum TipoManual {
     }
 
     public String getDescricaoTraduzida() {
-        return Principal.obterMensagem(this.chaveMensagem);
+        return WegOne.obterMensagem(this.chaveMensagem);
     } // usado para traduzir os valores do enum
 }

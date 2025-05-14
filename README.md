@@ -1,9 +1,9 @@
-
 <p align="center">
-  <img src="/versao final/frontend/imagens/logoTransparente.png" alt="Logo do Projeto" width="300">
+  <img src="/logo.png" alt="Logo do Projeto" width="300">
 </p>
 
 # 📝 Descrição
+
 Este repositório contém o projeto desenvolvido como parte da **Situação de Aprendizagem Interdisciplinar** do **CentroWeg - MIDS 77**. O objetivo foi integrar os conhecimentos adquiridos nas disciplinas de:
 
 - **Lógica da Programação**
@@ -13,92 +13,96 @@ Este repositório contém o projeto desenvolvido como parte da **Situação de A
 
 Além disso, utilizamos também conhecimentos de outras disciplinas, como **Técnicas de Programação**, **Web Design UI/UX** e **Programação Front-End**, entre outras.
 
+## 🎯 Objetivo
+
+O WegOne é um sistema de gerenciamento de manuais técnicos que permite:
+- Cadastro e gerenciamento de diferentes tipos de manuais
+- Suporte a múltiplos idiomas (Português, Inglês, Espanhol, Francês e Alemão)
+- Interface intuitiva para usuários
+- Armazenamento seguro dos dados
+
 ---
 
 # 📂 Estrutura do Projeto
 
-O projeto está dividido em duas versões principais:
+```
+WegOne/
+├── src/
+│   ├── main/
+│   │   ├── java/           # Código fonte Java
+│   │   └── resources/
+│   │       └── translate/  # Arquivos de tradução
+│   └── test/              # Testes unitários
+├── .vscode/               # Configurações do VS Code
+├── target/               # Arquivos compilados
+├── pom.xml              # Configuração Maven
+└── README.md           # Documentação
+```
 
-## 🧮 Versão 1: Utilizando Arrays
-- Aplicação dos conceitos de **Arrays**, ensinados na disciplina de **Técnicas de Programação**.
-- Foco no entendimento da manipulação de dados em memória e lógica de programação.
+## 🗂️ Componentes Principais
 
-## 🌐 Versão 2: Banco de Dados Integrado + Front-End
-- **Banco de Dados Integrado**: Utilizamos o **Railway** para hospedar o banco de dados na nuvem, permitindo o armazenamento e a recuperação de dados de forma persistente.
-- **Segurança**: Implementação de autenticação de usuários com login e senha, restringindo ações indesejadas através do banco de dados.
-- **Front-End**: Protótipo de interface desenvolvido para demonstrar como o sistema poderia ser apresentado ao usuário final.
+### 📚 Manuais Suportados
+- Manual de Conduta Operacional
+- Manual de Diagnóstico
+- Manual de Manutenção
+- Manual de Operação
+- Manual de Segurança
 
-> **⚠ Nota:** O front-end não foi integrado ao back-end no projeto final devido ao tempo limitado. Ele está incluído apenas como uma referência visual.
-
-## 🗂️ Outros Arquivos e Configurações
-
-### .vscode/
-- Diretório contendo configurações específicas do Visual Studio Code, como ajustes de espaço, formatação automática e extensões recomendadas para o projeto.
-- Facilita a padronização do ambiente de desenvolvimento para todos os colaboradores.
-
-### .gitignore
-- Lista de arquivos e diretórios ignorados pelo controle de versão.
-- Inclui:
-  - Diretórios de compilação (`/target/`).
-  - Configurações de IDEs (`/.idea/`, `*.iml`, etc.).
-  - Logs (`*.log`).
-  - Arquivos de sistema (`.DS_Store`, `Thumbs.db`).
-  - Arquivo de ambiente (`.env`).
-
-### Relatório de Acompanhamento de participação
-- Documento detalhando o progresso do projeto, incluindo:
-  - Relatório de acompanhamento
-  - QUadros de participação (individuais e por grupo)
-  - Resumo geral
-  - Pontos de atenção
-  - 
+### 🌐 Suporte a Idiomas
+- Português (pt.json)
+- Inglês (en.json)
+- Espanhol (es.json)
+- Francês (fr.json)
+- Alemão (de.json)
 
 ---
 
 # 🛠️ Tecnologias Utilizadas
 
-- **Java**: Para desenvolvimento da lógica de negócios e funcionalidades principais.
-- **HTML e CSS**: Para criação do protótipo de front-end.
-- **SQL**: Para criação e gerenciamento do banco de dados.
-- **[Railway](https://railway.com/)**: Para hospedagem do banco de dados na nuvem.
-- **[Jira](https://wegone.atlassian.net/jira/software/projects/SCRUM/summary)**: Para aplicação da metodologia **Scrum** no gerenciamento do projeto.
+- **Java**: Linguagem principal de desenvolvimento
+- **Maven**: Gerenciamento de dependências e build
+- **JSON**: Arquivos de tradução
+- **Git**: Controle de versão
+- **[Jira](https://wegone.atlassian.net/jira/software/projects/SCRUM/summary)**: Gerenciamento ágil do projeto (Scrum)
 
 ---
 
 # ▶️ Como Executar
 
-## 🧮 **Versão com Arrays**
-1. Navegue até o diretório correspondente à primeira versão.
-2. Compile e execute o arquivo principal utilizando qualquer IDE ou terminal com suporte a Java.
+## Pré-requisitos
+- Java JDK 17 ou superior
+- Maven 3.6 ou superior
+- IDE de sua preferência (recomendado: VS Code, IntelliJ IDEA ou Eclipse)
 
-## 🌐 **Versão com Banco de Dados**
-1. Navegue até o diretório correspondente à segunda versão.
-2. Compile e execute o arquivo principal.
-3. **Nota:** Caso ocorra algum erro, verifique a sua conexão com o banco de dados.
+## Passos para Execução
 
-## 💻 **Protótipo de Front-End**
-1. Abra os arquivos HTML e CSS em um navegador para visualizar o layout.
-
-## 🖥️ **Executar via Terminal (Java)**
-1. **Abra o terminal** e navegue até o diretório da versão desejada (por exemplo, versão com arrays ou com banco de dados):
+1. **Clone o repositório**
    ```bash
-   cd caminho/do/projeto
+   git clone https://github.com/seu-usuario/WegOne.git
+   cd WegOne
    ```
 
-2. **Compile o arquivo principal Java** (substitua `Main.java` pelo nome do seu arquivo principal):
+2. **Compile o projeto**
    ```bash
-   javac Main.java
+   mvn clean install
    ```
 
-3. **Execute o programa:**
+3. **Execute o programa**
    ```bash
-   java Main
+   mvn exec:java -Dexec.mainClass="com.wegone.Main"
    ```
 
-> **💡 Dica:** Certifique-se de que o Java está instalado e corretamente configurado na sua máquina (variável de ambiente `JAVA_HOME` e comando `java` funcionando no terminal). Para verificar:
-   ```bash
-   java -version
-   ```
+## Executando na IDE
+
+1. Abra o projeto na sua IDE
+2. Localize a classe `WegOne.java`
+3. Execute a classe principal
+
+> **💡 Dica:** Para verificar se o Java está instalado corretamente:
+> ```bash
+> java -version
+> mvn -version
+> ```
 
 ---
 
@@ -131,4 +135,4 @@ E aos demais professores que nos apoiaram em outras etapas do projeto:
 
 ## 💡 Observação Final
 
-Nos dedicamos com afinco e proatividade, sempre buscando adicionar novas funcionalidades e adquirir novos conhecimentos ao longo desse projeto.
+Este projeto foi desenvolvido com foco em boas práticas de programação, documentação clara e código limpo. A estrutura modular permite fácil manutenção e expansão futura.

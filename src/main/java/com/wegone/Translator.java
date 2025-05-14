@@ -1,4 +1,4 @@
-package com.WegOne;
+package com.wegone;
 
 import java.io.FileReader;
 import java.io.IOException;

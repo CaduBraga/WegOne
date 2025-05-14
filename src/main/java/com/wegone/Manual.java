@@ -1,4 +1,4 @@
-package com.WegOne;
+package com.wegone;
 
 import java.util.Date;
 import java.util.Scanner;
