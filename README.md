@@ -44,13 +44,36 @@ WegOne/
 
 # 🛠️ Tecnologias Utilizadas
 
-- **Java**: Linguagem principal de desenvolvimento
-- **Maven**: Gerenciamento de dependências e build
-- **JSON**: Arquivos de tradução
-- **Git**: Controle de versão
-- **[Jira](https://wegone.atlassian.net/jira/software/projects/SCRUM/summary)**: Gerenciamento ágil do projeto (Scrum)
-- **[Railway](https://railway.com/project/d14c7361-63e6-470e-9e43-4707af562791?environmentId=6efe2ce2-5ce4-40b2-9129-1f8a9e87c5c0)**: Plataforma de hospedagem e integração com banco de dados
-- **HTML/CSS**: Desenvolvimento do frontend
+<div align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="40" alt="Java logo" />
+  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apache/apache-original.svg" height="40" alt="Maven logo" title="Maven (Apache)" />
+  
+  <img src="https://raw.githubusercontent.com/github/explore/main/topics/json/json.png" height="40" alt="JSON logo" title="JSON" />
+  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="40" alt="Git logo" />
+  
+  <img src="https://cdn.worldvectorlogo.com/logos/jira-1.svg" height="40" alt="Jira logo" title="Jira" />
+  
+  <img src="https://railway.app/brand/logo-light.png" height="40" alt="Railway logo" title="Railway" />
+  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="HTML5 logo" />
+  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="CSS3 logo" />
+  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="JavaScript logo" />
+  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="40" alt="MySQL logo" />
+</div>
+
+
+- [**Java**](https://www.oracle.com/java/) — Linguagem principal de desenvolvimento  
+- [**Maven**](https://maven.apache.org/) — Gerenciamento de dependências e build  
+- [**JSON**](https://www.json.org/json-en.html) — Arquivos de tradução  
+- [**Git**](https://git-scm.com/) — Controle de versão  
+- [**Jira**](https://www.atlassian.com/software/jira) — Gerenciamento ágil do projeto (Scrum)  
+- [**Railway**](https://railway.app/) — Plataforma de hospedagem e integração com banco de dados  
+- [**HTML/CSS**](https://developer.mozilla.org/en-US/docs/Web/HTML) — Desenvolvimento do frontend
 
 ---
 
