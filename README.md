@@ -30,11 +30,9 @@ WegOne/
 ├── src/
 │   ├── main/
 │   │   ├── java/                   # Código fonte Java
-│   │   └── resources/
-│   │       └── translate/          # Arquivos de tradução
-│   └── test/                       # Testes unitários
-├── .vscode/                        # Configurações do VS Code
-├── target/                         # Arquivos compilados
+│   │   ├── resources/              # Recursos como arquivos de configuração
+│   │   │   └── translate/          # Arquivos de tradução
+│   │   └── webapp/                 # Conteúdo web (HTML, CSS, JS, etc.)
 ├── pom.xml                         # Configuração Maven
 ├── README.md                       # Documentação
 └── Relatorio de acompanhamento.pdf # Relatório de atividades
