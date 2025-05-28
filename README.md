@@ -152,6 +152,10 @@ E aos demais professores que nos apoiaram em outras etapas do projeto:
 
 ---
 
+## 🎤 Apresentação
+
+[Acesse a apresentação do projeto (Canva)](https://www.canva.com/design/DAGowyk8Koo/2j6WhHWOVpdoFqiVKY7J6w/edit?utm_content=DAGowyk8Koo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
 ## 💡 Observação Final
 
 Este projeto foi desenvolvido com foco em boas práticas de programação, documentação clara e código limpo. A estrutura modular permite fácil manutenção e expansão futura. 
