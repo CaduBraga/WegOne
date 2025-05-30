@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import org.json.JSONObject;
+import java.text.SimpleDateFormat;
 
 public class Manual {
     private static JSONObject mensagensNoIdiomaEscolhido;
@@ -83,9 +84,12 @@ public class Manual {
     }
 
     public void imprimir() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(this.dataDePublicacao);
+
         System.out.println("----- Dados do Manual -----");
         System.out.println("Título: " + titulo);
-        System.out.println("Data: " + dataDePublicacao);
+        System.out.println("Data: " + formattedDate);
         System.out.println("Autor: " + autor);
         System.out.println("Texto: " + texto);
         System.out.println("Tipo: " + tipo.getDescricao());
@@ -264,11 +268,12 @@ public class Manual {
         }
     }
 
-    public static void atualizarData(int id, Date novaData) {
+    public static void atualizarData(int id) {
         String sql = "UPDATE manuais SET dataDePublicacao = ? WHERE id_manual = ?";
         try (Connection conn = Conexao.conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setDate(1, new java.sql.Date(novaData.getTime()));
+            java.util.Date currentDate = new java.util.Date();
+            stmt.setDate(1, new java.sql.Date(currentDate.getTime()));
             stmt.setInt(2, id);
             stmt.executeUpdate();
             traduzir("update-date");

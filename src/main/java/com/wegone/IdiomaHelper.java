@@ -268,7 +268,7 @@ public class IdiomaHelper {
                     Manual.atualizarTexto(idEd, scanner.nextLine());
                     break;
                 case 4:
-                    Manual.atualizarData(idEd, java.sql.Date.valueOf(scanner.nextLine()));
+                    Manual.atualizarData(idEd);
                     break;
                 case 5:
                     traduzir("select-the-type-of-the-manual");
